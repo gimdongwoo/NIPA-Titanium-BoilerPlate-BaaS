@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><ti:app xmlns:ti="http://ti.appcelerator.org">
+	<id>nipa.titanium.boilerplate</id>
+	<name>TitaniumBoilerPlate</name>
+	<version>1.0</version>
+	<publisher>DongwooGim</publisher>
+	<url>https://github.com/gimdongwoo</url>
+	<description/>
+	<copyright>2015 by Dongwoo Gim, Inc.</copyright>
+	<icon>appicon.png</icon>
+	<fullscreen>false</fullscreen>
+	<navbar-hidden>false</navbar-hidden>
+	<analytics>true</analytics>
+	<guid>49dff3b3-81e6-4ec6-9d98-a526ac84a5ef</guid>
+	<property name="ti.ui.defaultunit" type="string">dp</property>
+	<ios>
+        <min-ios-ver>8.0</min-ios-ver>
+        <use-app-thinning>true</use-app-thinning>
+        <plist>
+            <dict>
+                <key>UISupportedInterfaceOrientations~iphone</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                </array>
+                <key>UISupportedInterfaceOrientations~ipad</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                    <string>UIInterfaceOrientationLandscapeLeft</string>
+                    <string>UIInterfaceOrientationLandscapeRight</string>
+                </array>
+                <key>UIRequiresPersistentWiFi</key>
+                <false/>
+                <key>UIPrerenderedIcon</key>
+                <false/>
+                <key>UIStatusBarHidden</key>
+                <false/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleDefault</string>
+                <key>CFBundleDevelopmentRegion</key>
+                <array>
+                    <string>ko</string>
+                </array>
+                <key>CFBundleLocalizations</key>
+                <array>
+                    <string>ko</string>
+                </array>
+                <key>UIBackgroundModes</key>
+                <array>
+                    <string>fetch</string>
+                </array>
+                <key>UIBackgroundModes</key>
+                <array>
+                    <string>remote-notification</string>
+                </array>
+            </dict>
+        </plist>
+    </ios>
+	<android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest android:versionCode="100" android:versionName="1.0.0">
+            <!-- Need to specify at least API level 11 for Titanium SDK 3.2.x and prior -->
+            <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="23"/>
+            <application android:theme="@style/Theme.CustomActionBar">
+                <activity
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:label="@string/app_name"
+                    android:name=".TitaniumboilerplateActivity"
+                    android:screenOrientation="portrait" android:theme="@style/Theme.Titanium">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN"/>
+                        <category android:name="android.intent.category.LAUNCHER"/>
+                    </intent-filter>
+                </activity>
+                <activity
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:name="org.appcelerator.titanium.TiActivity" android:screenOrientation="portrait"/>
+                <activity
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:name="org.appcelerator.titanium.TiTranslucentActivity"
+                    android:screenOrientation="portrait" android:theme="@style/Theme.AppCompat.Translucent"/>
+                <activity android:configChanges="screenSize"
+                    android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" android:screenOrientation="portrait"/>
+                <activity
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:name="ti.modules.titanium.media.TiCameraActivity"
+                    android:screenOrientation="portrait" android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar.Fullscreen"/>
+            </application>
+            <!-- Camera Permissions -->
+            <uses-permission android:name="android.permission.CALL_PHONE"/>
+            <uses-permission android:name="android.permission.CAMERA"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-feature android:name="android.hardware.camera"/>
+            <uses-feature android:name="android.hardware.camera.autofocus"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+            <uses-permission android:name="android.permission.VIBRATE"/>
+        </manifest>
+    </android>
+	<mobileweb>
+		<precache>
+		</precache>
+		<splash>
+			<enabled>true</enabled>
+			<inline-css-images>true</inline-css-images>
+		</splash>
+		<theme>default</theme>
+	</mobileweb>
+	<modules>
+	</modules>
+	<deployment-targets>
+		<target device="android">true</target>
+		<target device="ipad">false</target>
+		<target device="iphone">true</target>
+		<target device="mobileweb">false</target>
+		<target device="windows">false</target>
+	</deployment-targets>
+	<sdk-version>5.1.2.GA</sdk-version>
+	<plugins>
+		<plugin version="1.7.30">ti.alloy</plugin>
+	</plugins>
+	<property name="ti.android.bug2373.finishfalseroot" type="bool">true</property>
+    <property name="ti.android.bug2373.skipAlert" type="bool">true</property>
+</ti:app>

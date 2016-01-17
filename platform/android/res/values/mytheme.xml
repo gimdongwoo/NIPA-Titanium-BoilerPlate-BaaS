@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.NoActionBar" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <!-- Material Design -->
+        <item name="colorPrimary">@color/colorBase</item>
+        <item name="colorPrimaryDark">@color/colorBaseDark</item>
+    </style>
+
+    <style name="Theme.NoActionBarWhite" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <!-- Material Design -->
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
+    </style>
+
+    <style name="Theme.CustomActionBar" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <!-- Material Design -->
+        <item name="colorPrimary">@color/colorBase</item>
+        <item name="colorPrimaryDark">@color/colorBase</item>
+    </style>
+
+    <color name="colorBase">#EEEEEE</color>
+    <color name="colorBaseDark">#BBBBBB</color>
+    <color name="colorWhite">#FFFFFF</color>
+</resources>
