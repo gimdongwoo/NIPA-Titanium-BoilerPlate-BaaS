@@ -1,5 +1,24 @@
 <Alloy>
-	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, World</Label>
+	<!-- iOS Structure -->
+	<NavigationWindow id="navWindow" platform="ios">
+		<Window id="MainWindow">
+			<Require type="widget" src="com.boxoutthinkers.swipeback"/>
+			<View id="GlobalWrapper">
+				<View id="ContentWrapper">
+
+				</View>
+				<Require type="widget" src="com.mcongrove.tabs" id="Tabs" />
+			</View>
+		</Window>
+	</NavigationWindow>
+
+	<!-- Android Structure -->
+	<Window id="MainWindow" platform="android">
+		<View id="GlobalWrapper">
+			<View id="ContentWrapper">
+
+			</View>
+			<Require type="widget" src="com.mcongrove.tabs" id="Tabs" />
+		</View>
 	</Window>
 </Alloy>

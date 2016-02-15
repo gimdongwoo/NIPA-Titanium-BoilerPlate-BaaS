@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="appname">TitaniumBoilerPlate</string>
+    <string name="NSLocationWhenInUseUsageDescription">회원님의 위치정보를 알 수 있도록 허가해주세요.</string>
+</resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+	<!-- ///////공통(alloy.js, menu, 윈도우 타이틀이름. 혹은 기본적인것.) -->
+	<string name="loadingMessage">로딩중...</string>
+	<string name="question_naviRightBtnText">등록하기</string>
+	<string name="push_TitleMsg">알림</string>
+	<string name="push_okReadBtn">바로보기</string>
+
+	<!-- ///waitingmessage(스피너 메시지) -->
+	<string name="c_waitingMsgDefault">잠시만 기다려주세요.</string>
+	<string name="c_waitingMsgFirst">잠시만 기다려주세요.</string>	<!-- 처음 실행시 나타나는 스피너 메시지 -->
+
+	<!-- /// 경고알림(alert) -->
+	<!-- aappInfo 및 버전관련 알림-->
+	<string name="c_alertUpdateTitle">업데이트 안내</string>
+	<string name="c_alertFailFetchAppInfo">어플리케이션 정보를 가져오는데 실패했습니다. 다시 시도해주세요.</string>
+	<string name="c_alertRequestReinstall">사용할 수 없는 버전입니다. 어플리케이션을 다시 설치해주세요.</string>
+	<string name="c_alertNewVersion">새로운 버전이 나왔습니다.</string>
+
+	<!-- 버전업데이트 컨펌 관련-->
+	<string name="c_updateConfirmYes">설치하기</string>
+	<string name="c_updateConfirmNo">취소</string>
+	<string name="c_updateConfirmMessage">새로운 버전으로 업데이트하시겠습니까?</string>
+
+	<!-- 실행중 알림 메시지. -->
+	<string name="c_alertTitleDefault">알림</string>
+	<string name="c_alertMsgOk">확인</string>
+	<string name="c_alertMsgCancel">취소</string>
+	<string name="c_alertMsgDefault">다시 시도해주세요</string>
+	<string name="c_alertMsgFriend">친구목록을 불러오지 못했습니다.</string>
+	<string name="c_alertReadyToOpen">준비중 입니다.</string>
+
+	<!-- 기타알림-->
+	<string name="c_alertMsgFailSaveImage">이미지 저장에 실패했습니다. 다시 시도해주세요.</string>
+	<string name="c_alertMsgFailSendEmail">이메일 발송에 실패했습니다. 다시 시도해주세요.</string>
+	<string name="c_alertMsgSendedEmail">이메일을 발송했습니다.</string>
+
+	<string name="c_youWannaSendPhoto">사진을 전송하시겠습니까?</string>
+	<string name="c_msgSendingPhoto">전송 중입니다. 잠시만 기다려주세요.</string>
+
+	<!-- ///기타 공통된 몇가지 -->
+	<string name="c_emptyText">빈 문자열 입니다.</string>
+
+	<string name="c_edittingBtn">편집</string>
+	<string name="c_editBtn">수정</string>
+	<string name="c_deleteBtn">삭제</string>
+	<string name="c_completeBtn">완료</string>
+	<string name="c_cancle">취소</string>
+	<string name="c_manage">관리</string>
+
+	<string name="c_photo">사진</string>
+
+	<string name="c_recentVersion">최신 버전</string>
+	<string name="c_currentVersion">현재 버전</string>
+	<string name="c_updateRecentVersion">최신 버전 업데이트</string>
+	<string name="c_updateAlertTitle">컨텐츠 업데이트</string>
+	<string name="c_updateAlertMsg">새로운 컨텐츠가 다운로드 되었습니다.</string>
+
+	<string name="c_copyright">Copyright @ Dongwoo Gim. 2015</string>
+
+	<!-- 포토서비스 -->
+	<string name="ps_successSavePhoto">사진을 저장했습니다.</string>
+	<string name="ps_failSavePhoto">사진 저장에 실패했습니다. 다시 시도해주세요.</string>
+
+	<string name="ps_failGetPhoto">다시 시도해주세요.</string>
+	<string name="ps_failNotPhoto">사진이 아닙니다.</string>
+	<string name="ps_failCancle">취소했습니다.</string>
+	<string name="ps_failNotSuportCamera">장치가 카메라를 지원하지 않습니다.</string>
+	<string name="ps_deniedPermission">카메라를 사용할 권한이 없습니다.</string>
+	
+</resources>

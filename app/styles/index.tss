@@ -1,15 +1,28 @@
-".container": {
-	backgroundColor:"white"
+'Window[platform=android]': {
+	windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN
 }
 
-"Label": {
-	width: Ti.UI.SIZE,
-	height: Ti.UI.SIZE,
-	color: "#000"
-}
-
-"#label": {
-	font: {
-		fontSize: 12
-	}
+"#MainWindow": {
+	backgroundColor: "#EEE",
+},
+"#MainWindow[platform=android]": {
+	navBarHidden: true,
+	exitOnClose: true
+},
+"#MainWindow[platform=android formFactor=tablet]": {
+	orientationModes: [
+		Ti.UI.LANDSCAPE_LEFT
+	]
+},
+"#MainWindow[formFactor=handheld]": {
+	orientationModes: [
+		Ti.UI.PORTRAIT
+	]
+},
+"#GlobalWrapper": {
+	width: "100%"
+},
+"#ContentWrapper": {
+	top: "0dp",
+	bottom: "60dp"
 }

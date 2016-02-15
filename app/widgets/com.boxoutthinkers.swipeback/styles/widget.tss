@@ -1,0 +1,13 @@
+".leftBar":{
+	/*backgroundColor:"red",*/
+	width:10,left:0,
+	zIndex:99,
+	clipMode : Titanium.UI.iOS.CLIP_MODE_DISABLED
+}
+//네비바 크기만큼.
+".leftBar[platform=android]":{
+	top: 47
+}
+".leftBar[platform=ios]":{
+	top: 67
+}

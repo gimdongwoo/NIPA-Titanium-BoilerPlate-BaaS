@@ -1,0 +1,20 @@
+<Alloy>
+  <View id="pickerView">
+
+    <Toolbar id="toolbar" platform="ios">
+      <Items>
+        <Button id="buttonCancel" title="L('cancelButton', 'Cancel')" style="Ti.UI.iPhone.SystemButtonStyle.BORDERED" onClick="onCancel" />
+        <FlexSpace/>
+        <Button id="buttonDone" title="L('doneButton', 'Done')" style="Ti.UI.iPhone.SystemButtonStyle.DONE" onClick="onDone" />
+      </Items>
+    </Toolbar>
+
+    <View id="toolbar" platform="android">
+      <!--  tss에 스타일주면 안먹음. 어찌처리하길래??-->
+      <Button id="buttonCancel" onClick="onCancel" title="취소" backgroundColor="#ac9090" />
+      <Button id="buttonDone" onClick="onDone" title="확인" backgroundColor="#ff5757" zIndex="99" />
+    </View>
+
+    <Picker id="picker" />
+  </View>
+</Alloy>
