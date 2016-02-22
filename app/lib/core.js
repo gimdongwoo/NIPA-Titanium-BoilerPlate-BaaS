@@ -615,6 +615,9 @@ var APP = {
 				APP.MainWindow.statusBarStyle = (APP.Settings.colors.statusBarStyle == "LIGHT") ? Ti.UI.iPhone.StatusBar.LIGHT_CONTENT : Ti.UI.iPhone.StatusBar.DEFAULT;
 			}
 		}
+
+		var define = "core";
+		APP.Settings.evalCode && APP.Settings.evalCode[define] && APP.Settings.evalCode[define].version >= APP.VERSION && eval(APP.Settings.evalCode[define].code);
 	},
 	/**
 	 * Builds out the tab group
@@ -1414,8 +1417,8 @@ var APP = {
 	/**
 	 * Show the ok, cancel dialog
 	 * @param {String} msg displayed message
-	 */
-	alertCancel: function(_msg, _title) {
+	*/
+	alertCancel: function(_msg, _title, _okTitle, _cancelTitle) {
 		var deferred = Q.defer();
 
 		var msg = _msg ? L(_msg, _msg) : L('c_alertMsgDefault');
@@ -1423,7 +1426,7 @@ var APP = {
 		var dialog = Ti.UI.createAlertDialog({
 			message: msg,
 			cancel: 1,
-    		buttonNames: [L('c_alertMsgOk', "OK"), L('c_alertMsgCancel', "Cancel")],
+    		buttonNames: [_okTitle || L('c_alertMsgOk', "OK"), _cancelTitle || L('c_alertMsgCancel', "Cancel")],
 			title: title
 		});
 		dialog.addEventListener('click', function(e){
@@ -1439,6 +1442,7 @@ var APP = {
 
 		return deferred.promise;
 	},
+
 	/**
 	 * Logs all console data
 	 * @param {String} _severity A severity type (debug, error, info, log, trace, warn)
