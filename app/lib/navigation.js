@@ -51,7 +51,9 @@ function Navigation(_args) {
 		// and add the window here.  This keeps your views / controllers flexible
 		// without having to be bound by a window (useful for tablet architecture)
 
-		var controller = Alloy.createController(_controller, _controllerArguments);
+		if(typeof _controller === 'string') _controller = Alloy.createController(_controller, _controllerArguments);
+
+		var controller = _controller;
 		var win = controller.getView();
 
 		that.currentWindow = win;
