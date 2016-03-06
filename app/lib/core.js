@@ -9,7 +9,6 @@
  * @uses migrate
  * @uses update
  * @uses push
- * @uses Modules.ti.cloud
  */
 var Alloy = require("alloy");
 var UTIL = require("utilities");

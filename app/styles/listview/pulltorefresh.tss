@@ -1,0 +1,17 @@
+/**
+ * common
+ */
+
+".container": {
+	layout:"composite", width: Ti.UI.FILL,	height: Ti.UI.FILL,
+	backgroundColor:"white"
+}
+//////
+
+".mainView": {
+	backgroundColor:"#f7f7f7",
+	layout:"composite", width: Ti.UI.FILL,	height: Ti.UI.FILL,
+	zIndex:10
+}
+".mainView[platform=ios]": { top:67 }
+".mainView[platform=android]": { top:47 }
