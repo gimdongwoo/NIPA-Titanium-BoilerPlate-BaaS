@@ -129,10 +129,12 @@ function _capturePhotoForOverlay(action, params) {
 
 
 	params.success = function(event) {
-			// event.media
+		APP.openLoading();
+		// event.media
 		if(event.mediaType == Titanium.Media.MEDIA_TYPE_PHOTO) {
 			var photoInfo = {
-				blob : event.media,
+				// rotate for android
+				blob : exports.rotate(event.media),
 				//TODO[faith]: 확장자가 변경되야함
 				name : (OS_IOS) ? (Date.now() + ".jpg") : event.media.getFile().getName()
 			}
@@ -141,7 +143,7 @@ function _capturePhotoForOverlay(action, params) {
 		} else {
 			params._error ? params._error({messsage:L('ps_failNotPhoto') }) : '';
 		};
-
+		APP.closeLoading();
 	};
 	params.cancel = function() {
 		params._error ? params._error({messsage:L('ps_failCancle'), isCancel:true }) : '';
@@ -161,75 +163,93 @@ function _capturePhotoForOverlay(action, params) {
 	Titanium.Media[action].call(Titanium.Media, params);
 };
 
+exports.rotate = function(photoBlob, nativePath) {
+	Ti.API.debug('Original Image :', photoBlob.width, ' * ', photoBlob.height, 'photoBlob.nativePath :', photoBlob.nativePath, "nativePath :", nativePath);
 
+	var rotateImage;
+
+	if (OS_ANDROID) {
+		// only android
+		var fhImageFactory = require("fh.imagefactory");
+		var maximumSize = (photoBlob.width > photoBlob.height) ? photoBlob.width : photoBlob.height;
+		var nativePath = nativePath || photoBlob.nativePath;
+		fhImageFactory.rotateResizeImage(nativePath, maximumSize, 100);
+		rotateImage = Titanium.Filesystem.getFile(nativePath).read();
+	}else {
+		// return original
+		rotateImage = photoBlob;
+	}
+
+	return rotateImage;
+};
 
 exports.resize = function(photoBlob, targetView, nativePath) {
-		var ImageFactory = require('ti.imagefactory');
+	var ImageFactory = require('ti.imagefactory');
 
-		Ti.API.debug('Original Image :', photoBlob.width, ' * ', photoBlob.height, 'photoBlob.nativePath :', photoBlob.nativePath, "nativePath :", nativePath);
+	Ti.API.debug('Original Image :', photoBlob.width, ' * ', photoBlob.height, 'photoBlob.nativePath :', photoBlob.nativePath, "nativePath :", nativePath);
 
-		var resizedImage, croppedImage;
+	var resizedImage, croppedImage;
 
-		if (OS_ANDROID) {
-			var fhImageFactory = require("fh.imagefactory");
-			var maximumSize = null;
+	if (OS_ANDROID) {
+		var fhImageFactory = require("fh.imagefactory");
+		var maximumSize = null;
 
-			//이미지를 리사이즈 하면서 돌리자
-			if (photoBlob.width > photoBlob.height) {
-				// 가로가 길때
-				var rateWH = photoBlob.width / photoBlob.height;
-				var targetHeight = APP.Settings.image.width;
-				var targetWidth = targetHeight * rateWH;
-				maximumSize = targetWidth;
-			} else {
-				// 세로가 길때
-				var rateHW = photoBlob.height / photoBlob.width;
-				var targetWidth = APP.Settings.image.width;
-				var targetHeight = targetWidth * rateHW;
-				maximumSize = targetHeight;
-			}
-			var nativePath = nativePath || photoBlob.nativePath;
-			fhImageFactory.rotateResizeImage(nativePath, maximumSize, 100);
-			resizedImage = Titanium.Filesystem.getFile(nativePath).read();
-			Ti.API.debug('Resize Image : ', resizedImage.width, ' * ', resizedImage.height);
-		}else {
-			//촬영한 이미지 비율.
+		//이미지를 리사이즈 하면서 돌리자
+		if (photoBlob.width > photoBlob.height) {
+			// 가로가 길때
+			var rateWH = photoBlob.width / photoBlob.height;
+			var targetHeight = APP.Settings.image.width;
+			var targetWidth = targetHeight * rateWH;
+			maximumSize = targetWidth;
+		} else {
+			// 세로가 길때
 			var rateHW = photoBlob.height / photoBlob.width;
-
 			var targetWidth = APP.Settings.image.width;
-			var targetHeight = targetWidth * rateHW
-			resizedImage = ImageFactory.imageAsResized(photoBlob, {
-				width : targetWidth,
-				height : targetHeight
+			var targetHeight = targetWidth * rateHW;
+			maximumSize = targetHeight;
+		}
+		var nativePath = nativePath || photoBlob.nativePath;
+		fhImageFactory.rotateResizeImage(nativePath, maximumSize, 100);
+		resizedImage = Titanium.Filesystem.getFile(nativePath).read();
+		Ti.API.debug('Resize Image : ', resizedImage.width, ' * ', resizedImage.height);
+	}else {
+		//촬영한 이미지 비율.
+		var rateHW = photoBlob.height / photoBlob.width;
+
+		var targetWidth = APP.Settings.image.width;
+		var targetHeight = targetWidth * rateHW
+		resizedImage = ImageFactory.imageAsResized(photoBlob, {
+			width : targetWidth,
+			height : targetHeight
+		});
+		Titanium.API.info('Resize Image : ', targetWidth, ' * ', targetHeight);
+	}
+
+	// 화면에 표시된 영역 만큼만 크롭
+	if(targetView){
+		var cropHWRate = targetView.size.height / targetView.size.width;
+		var cropWidth = targetWidth;
+		var cropHeight = cropWidth * cropHWRate;
+		//가짜 이미지에서는 crop범위가 클경우 자르지 않는다.
+		//  Error: x + width must be <= bitmap.width()
+		if(cropWidth > resizedImage.width){
+			Titanium.API.info('not crop : cropWidth : ', cropWidth, '> bitmapWidth ', resizedImage.width);
+			croppedImage = resizedImage;
+		}else{
+			croppedImage = ImageFactory.imageAsCropped(resizedImage,{
+				x: 0,
+				y: 0, //상단에 nav영역이 있다면 그 높이 만큼
+				width: cropWidth,
+				height: cropHeight
 			});
-			Titanium.API.info('Resize Image : ', targetWidth, ' * ', targetHeight);
+			Titanium.API.info('Crop Image : ', cropWidth, ' * ', cropHeight);
 		}
 
-		// 화면에 표시된 영역 만큼만 크롭
-		if(targetView){
-			var cropHWRate = targetView.size.height / targetView.size.width;
-			var cropWidth = targetWidth;
-			var cropHeight = cropWidth * cropHWRate;
-			//가짜 이미지에서는 crop범위가 클경우 자르지 않는다.
-			//  Error: x + width must be <= bitmap.width()
-			if(cropWidth > resizedImage.width){
-				Titanium.API.info('not crop : cropWidth : ', cropWidth, '> bitmapWidth ', resizedImage.width);
-				croppedImage = resizedImage;
-			}else{
-				croppedImage = ImageFactory.imageAsCropped(resizedImage,{
-					x: 0,
-					y: 0, //상단에 nav영역이 있다면 그 높이 만큼
-					width: cropWidth,
-					height: cropHeight
-				});
-				Titanium.API.info('Crop Image : ', cropWidth, ' * ', cropHeight);
-			}
+	}
 
-		}
-
-		var imageToCompress = croppedImage || resizedImage;
-		// 이미지 압축을 하자
-		return  ImageFactory.compress(imageToCompress, APP.Settings.image.quality);
+	var imageToCompress = croppedImage || resizedImage;
+	// 이미지 압축을 하자
+	return  ImageFactory.compress(imageToCompress, APP.Settings.image.quality);
 };
 
 exports.resizeForThumbnail = function(photoBlob, thumbWidth) {
@@ -290,11 +310,13 @@ function _getOrCapturePhoto(action, params) {
 
 	function _callMedia() {
 		params.success = function(event) {
-				// event.media
+			APP.openLoading();
+			// event.media
 			if(event.mediaType == Titanium.Media.MEDIA_TYPE_PHOTO) {
 				Ti.API.debug('----------------------------------------사진촬')
 				var photoInfo = {
-					blob : event.media,
+					// rotate for android
+					blob : exports.rotate(event.media),
 					//TODO[faith]: 확장자가 변경되야함
 					name : (OS_IOS) ? (Date.now() + ".jpg") : event.media.getFile().getName()
 				}
@@ -302,7 +324,7 @@ function _getOrCapturePhoto(action, params) {
 			} else {
 				deferred.reject({messsage:L('ps_failNotPhoto') });
 			};
-
+			APP.closeLoading();
 		};
 		params.cancel = function() {
 			deferred.reject({messsage:L('ps_failCancle'), isCancel:true });
