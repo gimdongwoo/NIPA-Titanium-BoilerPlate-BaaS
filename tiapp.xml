@@ -114,7 +114,7 @@
 	</deployment-targets>
 	<sdk-version>5.2.2.GA</sdk-version>
 	<plugins>
-		<plugin version="1.7.35">ti.alloy</plugin>
+		<plugin version="1.9.0">ti.alloy</plugin>
 	</plugins>
 	<property name="ti.android.bug2373.finishfalseroot" type="bool">true</property>
     <property name="ti.android.bug2373.skipAlert" type="bool">true</property>
