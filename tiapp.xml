@@ -104,6 +104,7 @@
 		<theme>default</theme>
 	</mobileweb>
 	<modules>
+		<module platform="commonjs">TiParseJS</module>
 	</modules>
 	<deployment-targets>
 		<target device="android">true</target>
@@ -116,6 +117,11 @@
 	<plugins>
 		<plugin version="1.9.0">ti.alloy</plugin>
 	</plugins>
+	<property name="prod.Parse_ServerUrl" type="string"></property>
+  <property name="prod.Parse_AppId" type="string"></property>
+  <property name="prod.Parse_ClientKey" type="string"></property>
+  <property name="prod.Parse_RestKey" type="string"></property>
+  <property name="prod.Parse_JsKey" type="string"></property>
 	<property name="ti.android.bug2373.finishfalseroot" type="bool">true</property>
-    <property name="ti.android.bug2373.skipAlert" type="bool">true</property>
+  <property name="ti.android.bug2373.skipAlert" type="bool">true</property>
 </ti:app>
