@@ -12,10 +12,35 @@
     "express": "~4.11.x",
     "kerberos": "~0.0.x",
     "parse": "~1.8.0",
-    "parse-server": "~2.2.2"
+    "parse-server": "~2.2.2",
+    "underscore": "~1.4.2",
+    "moment": "~1.7.2",
+    "applinks-metatag": "~0.0.0",
+    "mandrill": "git://github.com/flovilmart/parse-mandrill#0.0.1-parse",
+    "sendgrid": "git://github.com/flovilmart/parse-sendgrid#0.0.1-parse",
+    "stripe": "git://github.com/flovilmart/parse-stripe#2.5.0-parse",
+    "twilio": "~1.6.0",
+    "better-npm-run": "~0.0.8",
+    "cron": "1.1.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "better-npm-run test",
+    "debug": "better-npm-run debug"
+  },
+  "betterScripts": {
+    "test": {
+      "command": "node index.js",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "debug": {
+      "command": "node-debug index.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
   },
   "engines": {
     "node": ">=4.3"
