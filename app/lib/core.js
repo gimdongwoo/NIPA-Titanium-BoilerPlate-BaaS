@@ -411,11 +411,6 @@ var APP = {
 			// The initial screen to show
 			APP.handleNavigation(0);
 		}
-
-		if(!isJoining){
-			//notify change userdata for rank
-			APP.UserM.trigger('modify:childrendIds');
-		}
 	},
 	/**
 	 * login or join window displayed after login failed
