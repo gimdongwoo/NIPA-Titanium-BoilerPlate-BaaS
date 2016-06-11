@@ -117,11 +117,10 @@
 	<plugins>
 		<plugin version="1.9.0">ti.alloy</plugin>
 	</plugins>
-	<property name="prod.Parse_ServerUrl" type="string"></property>
-  <property name="prod.Parse_AppId" type="string"></property>
-  <property name="prod.Parse_ClientKey" type="string"></property>
-  <property name="prod.Parse_RestKey" type="string"></property>
-  <property name="prod.Parse_JsKey" type="string"></property>
+	<property name="Parse_ServerUrl" type="string">http://parseserver-bsmcf-env.us-east-1.elasticbeanstalk.com/parse</property>
+  <property name="Parse_AppId" type="string">G7Iqo0zI1d02WsznzwiI6zTl6UL2g5b5</property>
+  <property name="Parse_RestKey" type="string"></property>
+  <property name="Parse_JsKey" type="string"></property>
 	<property name="ti.android.bug2373.finishfalseroot" type="bool">true</property>
   <property name="ti.android.bug2373.skipAlert" type="bool">true</property>
 </ti:app>
