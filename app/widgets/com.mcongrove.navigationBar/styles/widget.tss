@@ -1,102 +1,107 @@
 "#Wrapper": {
-	top: "0dp",
-	left: "0dp",
-	width: Ti.UI.FILL,
-	height: "47dp",
-	backgroundColor: "#000",
-	zIndex: 95
+  top: "0dp",
+  left: "0dp",
+  width: Ti.UI.FILL,
+  height: "47dp",
+  backgroundColor: "#000",
+  zIndex: 95
 },
 "#border": {
-	bottom: "0dp",
-	height: "1dp",
-	width: Ti.UI.FILL,
-	backgroundColor: "#000",
-	opacity: 0.2
+  bottom: "0dp",
+  height: "1dp",
+  width: Ti.UI.FILL,
+  backgroundColor: "#000",
+  opacity: 0.2
 },
 "#overlay": {
-	height: Ti.UI.FILL,
-	width: Ti.UI.FILL,
-	left: "0dp",
-	top: "0dp"
+  height: Ti.UI.FILL,
+  width: Ti.UI.FILL,
+  left: "0dp",
+  top: "0dp"
 },
 "#leftWarp": {
-	top: "0dp",
-	left: "0dp",
-	width: Titanium.UI.SIZE,
-	height: "47dp",
-	layout: "horizontal"
+  top: "0dp",
+  left: "0dp",
+  width: Titanium.UI.SIZE,
+  height: "47dp",
+  layout: "horizontal"
 },
 "#rightWarp": {
-	top: "0dp",
-	right: "0dp",
-	width: Titanium.UI.SIZE,
-	height: "47dp",
-	layout: "horizontal"
+  top: "0dp",
+  right: "0dp",
+  width: Titanium.UI.SIZE,
+  height: "47dp",
+  layout: "horizontal"
 },
 ".leftItem": {
-	top: "0dp",
-	left: "0dp",
-	width: "0dp",
-	height: "47dp"
+  top: "0dp",
+  left: "0dp",
+  width: "0dp",
+  height: "47dp"
 },
 ".leftImage": {
-	top: "9dp",
-	left: "9dp",
-	width: "28dp",
-	height: "28dp",
-	preventDefaultImage: true
+  top: "9dp",
+  left: "9dp",
+  width: "28dp",
+  height: "28dp",
+  preventDefaultImage: true
 },
 ".selectRound": {
-	backgroundColor:"#fffac7",
-	left: "3.5dp", //20-17.5 applystyle.이라달러.
-	width: "35dp",
-	height: "35dp",
-	borderRadius: 17.5,
-	zIndex:5
+  backgroundColor:"#fffac7",
+  left: "3.5dp", //20-17.5 applystyle.이라달러.
+  width: "35dp",
+  height: "35dp",
+  borderRadius: 17.5,
+  zIndex:5
 },
 "#backImage": {
-	top: "9dp",
-	left: "9dp",
-	width: "28dp",
-	height: "28dp",
-	preventDefaultImage: true,
-	zIndex:10
+  top: "9dp",
+  left: "9dp",
+  width: "28dp",
+  height: "28dp",
+  preventDefaultImage: true,
+  zIndex:10
 },
 "#alarmImage": {
-	top: "3.5dp",
-	left: "8dp",
-	width: "40dp",
-	height: "40dp",
-	preventDefaultImage: true,
-	zIndex:10
+  top: "3.5dp",
+  left: "8dp",
+  width: "40dp",
+  height: "40dp",
+  preventDefaultImage: true,
+  zIndex:10
 }
 "#alarmBackground": {
-	backgroundColor:"#fffac7",
-	top: "6dp",
-	left: "10dp",
-	width: "35dp",
-	height: "35dp",
-	borderRadius: 17.5,
-	zIndex:5
+  backgroundColor:"#fffac7",
+  top: "6dp",
+  left: "10dp",
+  width: "35dp",
+  height: "35dp",
+  borderRadius: 17.5,
+  zIndex:5
 },
 ".rightImage": {
-	top: "9dp",
-	right: "9dp",
-	width: "28dp",
-	height: "28dp",
-	preventDefaultImage: true
+  top: "9dp",
+  right: "9dp",
+  width: "28dp",
+  height: "28dp",
+  preventDefaultImage: true
 },
 ".rightItem": {
-	top: "0dp",
-	right: "0dp",
-	width: "0dp",
-	height: "47dp"
+  top: "0dp",
+  right: "0dp",
+  width: "0dp",
+  height: "47dp"
 },
 "#rightEx": {
-	top: "0dp",	right: "0dp", height: "47dp",
-	width: Ti.UI.SIZE
+  top: "0dp",  right: "0dp", height: "47dp",
+  width: Ti.UI.SIZE
 },
 "#rightExText": {
-	width: Ti.UI.SIZE,	height: Ti.UI.SIZE,
-	right: "9dp",
+  width: Ti.UI.SIZE,  height: Ti.UI.SIZE,
+  right: "9dp",
 },
+
+".centerWrap": {
+  height:40,
+  bottom:0, left:48, right:48,
+}

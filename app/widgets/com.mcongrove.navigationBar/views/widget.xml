@@ -1,42 +1,44 @@
 <Alloy>
-	<View id="Wrapper">
-		<View id="overlay">
-			<View id="titleView" />
+  <View id="Wrapper">
+    <View id="overlay">
+      <View id="titleView" />
+      <View id="centerWrap" class="centerWrap" />
+        
 
-			<View id="leftWarp">
-				<View id="back" class="leftItem" visible="false">
-					<ImageView id="backImage" />
-					<View id="backBackground" class="selectRound" visible="false" />
-				</View>
+      <View id="leftWarp">
+        <View id="back" class="leftItem" visible="false">
+          <ImageView id="backImage" />
+          <View id="backBackground" class="selectRound" visible="false" />
+        </View>
 
-				<View id="alarm" class="leftItem" visible="false">
-					<ImageView id="alarmImage" />
-					<View id="alarmBackground" visible="false" />
-				</View>
+        <View id="alarm" class="leftItem" visible="false">
+          <ImageView id="alarmImage" />
+          <View id="alarmBackground" visible="false" />
+        </View>
 
-				<View id="left" class="leftItem" visible="false">
-					<ImageView id="leftImage" class="leftImage" />
-				</View>
-			</View>
+        <View id="left" class="leftItem" visible="false">
+          <ImageView id="leftImage" class="leftImage" />
+        </View>
+      </View>
 
-			<View id="rightWarp">
-				<View id="rightAdd" class="rightItem" visible="false">
-				</View>
+      <View id="rightWarp">
+        <View id="rightAdd" class="rightItem" visible="false">
+        </View>
 
-				<View id="right" class="rightItem" visible="false">
-					<ImageView id="rightImage" class="rightImage" />
-				</View>
+        <View id="right" class="rightItem" visible="false">
+          <ImageView id="rightImage" class="rightImage" />
+        </View>
 
-				<View id="rightEx" visible="false">
-					<Label id="rightExText" />
-				</View>
+        <View id="rightEx" visible="false">
+          <Label id="rightExText" />
+        </View>
 
-				<View id="next" class="rightItem" visible="false">
-					<ImageView id="nextImage" class="rightImage" />
-				</View>
-			</View>
-		</View>
+        <View id="next" class="rightItem" visible="false">
+          <ImageView id="nextImage" class="rightImage" />
+        </View>
+      </View>
+    </View>
 
-		<View id="border" />
-	</View>
+    <View id="border" />
+  </View>
 </Alloy>
