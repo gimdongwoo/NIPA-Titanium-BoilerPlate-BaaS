@@ -401,12 +401,6 @@ var APP = {
 			APP.joinView = null;
 		}
 
-		// childView close
-		if (APP.childView) {
-			APP.childView.close();
-			APP.childView = null;
-		}
-
 		if(isJoining || APP.currentStack < 0){
 			// The initial screen to show
 			APP.handleNavigation(0);
@@ -417,45 +411,9 @@ var APP = {
 	 */
 	requiredLogin: function() {
 		APP.Navigator.closeAll();
-		APP.joinView = Alloy.createController('join').getView();
+		APP.joinView = Alloy.createController('member/join').getView();
 		APP.joinView.open();
 		APP.closeMainWindow();
-	},
-	/**
-	 * children add window displayed after login success
-	 */
-	requiredChildren: function(isJoining) {
-		APP.Navigator.closeAll();
-
-		APP.openChildrenInput(isJoining);
-		APP.closeLoading();
-		APP.closeMainWindow();
-	},
-	/**
-	 * 사용중에 자녀정보입력하기를 통해서 childInput을 보이게함.
-	 */
-	openChildrenInput: function(isJoining, parentWindow) {
-		var isJoining = isJoining ? true : false;
-		if(!APP.SettingsM.get('isWatched_walksthrough')){
-			Alloy.createController('walksthrough',{ callback : function() {
-				APP.childView = Alloy.createController('children/childInput',{isJoining : isJoining, parentWindow: parentWindow}).getView();
-				APP.childView.open();
-			}}).getView().open();
-		}else{
-			APP.childView = Alloy.createController('children/childInput',{isJoining : isJoining, parentWindow: parentWindow}).getView();
-			APP.childView.open();
-		}
-	},
-	/**
-	* 자녀정보가 있어야만 열수 있는 뷰의 처리
-	*/
-	requiredChildrenForView: function(_callback, _subType, _hidecallback) {
-		if(APP.UserM.hasNotChild()){
-			Alloy.createController('guideView',{parentView:APP.ContentWrapper, type:'children'}).show(_callback, _subType, _hidecallback);
-		}else{
-			//else do
-			_callback && _callback('hasChild');
-		}
 	},
 	/**
 	 * Determines the device characteristics

@@ -15,3 +15,41 @@
 }
 ".mainView[platform=ios]": { top:67 }
 ".mainView[platform=android]": { top:47 }
+
+".joinForm": {
+	width: Ti.UI.FILL, height: Ti.UI.FILL,
+	layout: "vertical",
+}
+
+".formRow": {
+	height: 60, width:Ti.UI.FILL,
+	layout: "horizontal",
+}
+
+".leftLable": {
+	left: 10, width: 120, height: Ti.UI.SIZE,
+}
+
+".rightInput": {
+	left: 10, width: 150, height: 20
+}
+
+".buttonRow": {
+	width: Ti.UI.FILL, height: 60
+}
+
+".button": {
+	left: 20, right: 20, height: 40
+}
+
+".buttonText": {
+	color:"white", font: { fontSize: 15, fontWeight:"bold"}
+}
+
+".bgBlue": {
+	backgroundColor: "blue"
+}
+
+".bgRed": {
+	backgroundColor: "red"
+}

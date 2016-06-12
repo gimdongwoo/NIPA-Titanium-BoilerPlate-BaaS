@@ -16,7 +16,7 @@ CTX.$observer = null;
 $.init = function() {
 	APP.log("debug", "default.init | " + JSON.stringify(CONFIG));
 	$.NavigationBar.setBackgroundColor(APP.Settings.colors.primary);
-	$.NavigationBar.setTitle('', APP.Settings.navBarStyle.titleStyle);
+	$.NavigationBar.setTitle('join', APP.Settings.navBarStyle.titleStyle);
 
 	if(CONFIG.isChild === true) {
 		$.NavigationBar.showBack(function(_event) {

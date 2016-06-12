@@ -2,7 +2,38 @@
 	<View id="window" class="container">
 		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		<View id="mainView" class="mainView">
-
+			<View id="joinForm" class="joinForm">
+				<View class="formRow">
+					<Lable class="leftLable" text="ID" />
+					<TextField id="userId" class="rightInput" />
+				</View>
+				<View class="formRow">
+					<Lable class="leftLable" text="Password" />
+					<TextField id="userPw" class="rightInput" />
+				</View>
+				<View class="formRow">
+					<Lable class="leftLable" text="Repeat" />
+					<TextField id="userPwRepeat" class="rightInput" />
+				</View>
+				<View class="formRow">
+					<Lable class="leftLable" text="Name" />
+					<TextField id="userName" class="rightInput" />
+				</View>
+				<View class="formRow">
+					<Lable class="leftLable" text="Email" />
+					<TextField id="userEmail" class="rightInput" />
+				</View>
+				<View class="buttonRow">
+					<View class="button bgBlue">
+						<Lable class="buttonText" text="Sign Up">
+					</View>
+				</View>
+				<View class="buttonRow">
+					<View class="button bgRed">
+						<Lable class="buttonText" text="Cancel">
+					</View>
+				</View>
+			</View>
 		</View>
 	</View>
 </Alloy>
