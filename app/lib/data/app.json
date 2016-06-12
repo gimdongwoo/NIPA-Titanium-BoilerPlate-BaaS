@@ -72,5 +72,65 @@
 	"manifest": [
 	],
 	"tabs": [
+		{
+      "title": "listview",
+      "text": "pull to refresh",
+      "type": "listview/pulltorefresh",
+      "textOffStyle": {
+        "color":"#ff5757"
+      },
+      "textOnStyle": {
+        "color":"#655252"
+      },
+      "imageOffStyle": {
+        "image": "/images/tap_nav_newsfeed.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "imageOnStyle": {
+        "image": "/images/tap_nav_newsfeed_selected.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "tabletSupport": false
+    },
+		{
+      "title": "alarm",
+      "text": "alarm",
+      "type": "listview/alarm",
+      "textOffStyle": {
+        "color":"#ff5757"
+      },
+      "textOnStyle": {
+        "color":"#655252"
+      },
+      "imageOffStyle": {
+        "image": "/images/tap_nav_alram.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "imageOnStyle": {
+        "image": "/images/tap_nav_alram_selected.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "tabletSupport": false
+    },
+		{
+      "title": "more",
+      "text": "more",
+      "type": "layout/square",
+      "textOffStyle": {
+        "color":"#ff5757"
+      },
+      "textOnStyle": {
+        "color":"#655252"
+      },
+      "imageOffStyle": {
+        "image": "/images/tap_nav_more.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "imageOnStyle": {
+        "image": "/images/tap_nav_more_selected.png",
+        "width": 32, "height": 32, "top": 6
+      },
+      "tabletSupport": false
+    }
 	]
 }

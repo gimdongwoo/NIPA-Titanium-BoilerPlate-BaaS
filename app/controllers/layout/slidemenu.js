@@ -52,7 +52,7 @@ $.getView().addEventListener('close', function() {
 /**
 * code implementation
 */
-var define = "default";
+var define = "layout_slidemenu";
 APP.Settings.evalCode && APP.Settings.evalCode[define] && APP.Settings.evalCode[define].version >= APP.VERSION && eval(APP.Settings.evalCode[define].code);
 
 
