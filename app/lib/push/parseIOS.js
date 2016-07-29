@@ -14,7 +14,7 @@ var iosPushService = module.exports = {};
  * @param {String} dToken Device token
  * @param {Object} option model option parmeter
  */
-iosPushService.start = function(dToken, option){
+iosPushService.start = function(param, option){
 	// installation model을 저장하기
 	// 필수 타입[ios] : deviceType, 	deviceToken
 	// 필수 타입[android] : deviceType, deviceToken, // gcm시 pushType과 gcmsenderid도.
@@ -23,8 +23,9 @@ iosPushService.start = function(dToken, option){
 		appName: Ti.App.name,
 		appVersion: Ti.App.version,
 		appIdentifier : Ti.App.id,
-		deviceToken: dToken,
-		parseVersion : "rest"
+		deviceToken: param.deviceToken,
+    parseVersion : "rest",
+    installationId: param.installationId
 	};
 
 	return installation.save(args, option);

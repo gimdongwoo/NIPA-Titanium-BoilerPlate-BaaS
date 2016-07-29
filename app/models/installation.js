@@ -85,8 +85,8 @@ config: {
 			_save : function (attributes) {
                 var self = this;
 				var deferred = Q.defer();
-                // deviceToken이 업데이트 되면 에러 발생
-                var tempInstallationM = Alloy.createModel('Installation');
+        // deviceToken이 업데이트 되면 에러 발생
+        var tempInstallationM = Alloy.createModel('Installation');
 				tempInstallationM.save(_.extend({'objectId': this.id},attributes), {
 					success: function (result) {
 						self.set(attributes, {change:false});

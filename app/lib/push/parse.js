@@ -46,7 +46,7 @@ if(OS_IOS) {
 		//e.deviceToken save
 		APP.SettingsM.set('Installation_deviceToken', e.deviceToken).save();
 		//installation model save
-		ParsePush.start(e.deviceToken,{
+		ParsePush.start({'deviceToken': e.deviceToken, 'installationId': APP.SettingsM.get('Installation_objectId')}, {
 			success : function(){
 				APP.SettingsM.set('Installation_objectId', installation.id).save();
 				APP.log("debug", "Parse.registeriOS @success / Installation_objectId : ", APP.SettingsM.get('Installation_objectId'));
@@ -154,10 +154,32 @@ if(OS_IOS) {
  * @param {Function} _callback The function to run after registration is complete
  */
 function afterRegisterDevice(_callback) {
-	// do
+	// app start from push
+  var msg = null;
+  if(OS_ANDROID) {
+    if (Titanium.App.Android.launchIntent && Titanium.App.Android.launchIntent.getStringExtra) {
+  		var notifyStr = Titanium.App.Android.launchIntent.getStringExtra('com.parse.Data');
+      if (notifyStr) {
+    		msg = JSON.parse(notifyStr);
+      }
+    }
+	}
+  if (OS_IOS) {
+    var launchOptions = Ti.App.getArguments();
+    if (launchOptions.UIApplicationLaunchOptionsRemoteNotificationKey) {
+      msg = launchOptions.UIApplicationLaunchOptionsRemoteNotificationKey;
+    }
+  }
+
+	// clicked
+  if (msg) {
+    _.defer(function() {
+      PUSH.pushRecieved(msg, true);
+    });
+  }
 
 	// done
-	_callback();
+	_callback && _callback();
 }
 
 /**
@@ -261,7 +283,7 @@ exports.setUserInfo = function(userM, errorCount) {
 		.then(function() {
 				APP.SettingsM.set('Installation_objectId', installation.id).save();
 				// 로그인한 유저정보를 기록한다(User_objectId);
-				installation.save({'User_objectId': userM.id}, {
+				installation._save({'User_objectId': userM.id}, {
 					success: function() {
 						APP.log("debug", "Installation setUserInfo success : " + installation.id + ' / ' + installation.get("User_objectId"));
 
