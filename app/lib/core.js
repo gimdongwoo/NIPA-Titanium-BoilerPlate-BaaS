@@ -509,7 +509,7 @@ var APP = {
    */
   requiredLogin: function() {
     APP.Navigator.closeAll();
-    APP.joinView = Alloy.createController('join/join').getView();
+    APP.joinView = Alloy.createController('member/login').getView();
     APP.joinView.open();
     APP.closeMainWindow();
   },
