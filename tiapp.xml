@@ -105,6 +105,20 @@
 	</mobileweb>
 	<modules>
 		<module platform="commonjs">TiParseJS</module>
+		<module platform="android">eu.rebelcorp.parse</module>
+		<module platform="android">fh.imagefactory</module>
+		<module platform="android">ti.mediapicker</module>
+		<module platform="android">pw.custom.androidcamera</module>
+		<module platform="android">com.boxoutthinkers.reqstorageperm</module>
+		<module platform="android">ti.imagefactory</module>
+		<module platform="android">ti.android.sms</module>
+		<module platform="android">com.rkam.swiperefreshlayout</module>
+		<module platform="android">org.iotashan.titouchimageview</module>
+		<module platform="android">ti.andinstreferrer</module>
+		<module platform="iphone">ti.mediapicker</module>
+		<module platform="iphone">ti.imagefactory</module>
+		<module platform="iphone">com.omorandi</module>
+		<module platform="iphone">com.appcelerator.urlSession</module>
 	</modules>
 	<deployment-targets>
 		<target device="android">true</target>

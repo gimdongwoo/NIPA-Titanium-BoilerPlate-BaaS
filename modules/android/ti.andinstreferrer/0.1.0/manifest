@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1.0
+apiversion: 2
+architectures: armeabi armeabi-v7a x86
+description: Ti-Android-InstallReferrer
+author: Dongwoo Gim
+license: MIT License
+copyright: Copyright (c) 2016 by BOXOUTTHINKERS
+
+# these should not be edited
+name: TiAndroidInstallReferrer
+moduleid: ti.andinstreferrer
+guid: ad2ba231-fe65-45cc-91cd-4db141344875
+platform: android
+minsdk: 5.1.0.GA
