@@ -1,24 +1,12 @@
 <Alloy>
-	<!-- iOS Structure -->
-	<NavigationWindow id="navWindow" platform="ios">
-		<Window id="MainWindow">
-			<Require type="widget" src="com.boxoutthinkers.swipeback"/>
-			<View id="GlobalWrapper">
-				<View id="ContentWrapper">
+  <!-- iOS Structure -->
+  <TabGroup id="MainTapGroup" platform="ios">
+  </TabGroup>
 
-				</View>
-				<Require type="widget" src="com.mcongrove.tabs" id="Tabs" />
-			</View>
-		</Window>
-	</NavigationWindow>
-
-	<!-- Android Structure -->
-	<Window id="MainWindow" platform="android">
-		<View id="GlobalWrapper">
-			<View id="ContentWrapper">
-
-			</View>
-			<Require type="widget" src="com.mcongrove.tabs" id="Tabs" />
-		</View>
-	</Window>
+  <!-- Android Structure -->
+  <Window id="MainWindow" platform="android">
+    <View id="GlobalWrapper">
+      <View id="ContentWrapper" />
+    </View>
+  </Window>
 </Alloy>
