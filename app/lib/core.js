@@ -355,8 +355,6 @@ var APP = {
   checkPermissions: function(callback) {
     // request storage permission
     if (OS_ANDROID) {
-      var RSP = require("com.boxoutthinkers.reqstorageperm");
-
       var ownedPermission = function() {
         // done
         APP.closeLoading();
@@ -364,8 +362,8 @@ var APP = {
       };
 
       var requestStoragePerm = function() {
-        if (!RSP.hasStoragePermission()) {
-          RSP.requestStoragePermissions(function (e) {
+        if (!Ti.Filesystem.hasStoragePermissions()) {
+          Ti.Filesystem.requestStoragePermissions(function (e) {
             if (e.success) {
               // success
               Ti.API.info('requestStoragePermission : success');
@@ -387,7 +385,7 @@ var APP = {
                 Ti.Android.currentActivity.onResume = resumedFn;
 
                 // settings open
-                RSP.settingsOpen();
+                require("com.boxoutthinkers.reqstorageperm").settingsOpen();
               });
             }
           });
@@ -398,7 +396,7 @@ var APP = {
       };
 
       var checkNRequestStoragePerm = function () {
-        if (!RSP.hasStoragePermission()) {
+        if (!Ti.Filesystem.hasStoragePermissions()) {
           APP.alert(L("c_requestStoragePerm")).then(function() {
             requestStoragePerm();
           });

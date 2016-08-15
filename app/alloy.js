@@ -10,7 +10,7 @@ require("tiparsejs_wrapper")({
 Parse.User.enableRevocableSession();
 
 // 기초 설정
-Ti.UI.backgroundColor = '#ff5757';
+Ti.UI.backgroundColor = '#ffffff';
 
 // // Monitor silent push notifications
 // if (OS_IOS) {
