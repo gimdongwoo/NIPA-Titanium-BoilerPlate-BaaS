@@ -26,6 +26,11 @@ $.init = function() {
 	}
 };
 
+CTX.openSignUp = function() {
+	CTX.signUpView || (CTX.signUpView = Alloy.createController('member/join').getView());
+	CTX.signUpView.open();
+};
+
 /**
  * init, fetch, 리스너 등록/해제
  */
@@ -46,7 +51,6 @@ $.getView().addEventListener('open', function() {
 });
 $.getView().addEventListener('close', function() {
 	CTX.close();
-
 });
 
 /**

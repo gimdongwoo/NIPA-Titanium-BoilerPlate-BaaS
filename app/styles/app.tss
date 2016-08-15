@@ -51,7 +51,8 @@ overrode the settings with other TSS, XML, or JS settings:
   color: "#655252"
 }
 "TextField": {
-  color: "#655252"
+  color: "#655252",
+  backgroundColor:"transparent"
 }
 "ImageView[platform=ios]": {
   preventDefaultImage: true

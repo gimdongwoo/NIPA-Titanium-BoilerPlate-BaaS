@@ -4,33 +4,33 @@
 		<View id="mainView" class="mainView">
 			<View id="joinForm" class="joinForm">
 				<View class="formRow">
-					<Label class="leftLabel" text="ID" />
+					<Label class="leftLabel" text="L('join_lb_id')" />
 					<TextField id="userId" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Label class="leftLabel" text="Password" />
+					<Label class="leftLabel" text="L('join_lb_pw')" />
 					<TextField id="userPw" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Label class="leftLabel" text="Repeat" />
+					<Label class="leftLabel" text="L('join_lb_pwrepeat')" />
 					<TextField id="userPwRepeat" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Label class="leftLabel" text="Name" />
+					<Label class="leftLabel" text="L('join_btn_name')" />
 					<TextField id="userName" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Label class="leftLabel" text="Email" />
+					<Label class="leftLabel" text="L('join_btn_email')" />
 					<TextField id="userEmail" class="rightInput" />
 				</View>
 				<View class="buttonRow">
 					<View class="button bgBlue">
-						<Label class="buttonText" text="Sign Up" />
+						<Label class="buttonText" text="L('join_btn_join')" />
 					</View>
 				</View>
 				<View class="buttonRow">
 					<View class="button bgRed">
-						<Label class="buttonText" text="Cancel" />
+						<Label class="buttonText" text="L('join_btn_cancel')" />
 					</View>
 				</View>
 			</View>

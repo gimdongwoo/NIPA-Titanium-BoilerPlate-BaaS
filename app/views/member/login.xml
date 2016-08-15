@@ -18,7 +18,7 @@
 				</View>
 				<View class="buttonRow">
 					<View class="button bgRed">
-						<Label class="buttonText" text="L('join_btn_join')" />
+						<Label class="buttonText" text="L('join_btn_join')" onClick="CTX.openSignUp" />
 					</View>
 				</View>
 			</View>

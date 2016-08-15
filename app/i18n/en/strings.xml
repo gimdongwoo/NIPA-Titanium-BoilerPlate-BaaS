@@ -76,7 +76,11 @@
 	<!-- Join -->
 	<string name="join_lb_id">User ID</string>
 	<string name="join_lb_pw">Password</string>
+	<string name="join_lb_pwrepeat">Repeat</string>
 	<string name="join_btn_login">SIGN IN</string>
 	<string name="join_btn_join">SIGN UP</string>
+	<string name="join_btn_cancel">CANCEL</string>
+	<string name="join_btn_name">Name</string>
+	<string name="join_btn_email">Email</string>
 
 </resources>
