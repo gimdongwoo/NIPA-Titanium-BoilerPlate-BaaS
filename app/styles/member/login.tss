@@ -26,7 +26,7 @@
 	layout: "horizontal",
 }
 
-".leftLable": {
+".leftLabel": {
 	left: 10, width: 120, height: Ti.UI.SIZE,
 }
 

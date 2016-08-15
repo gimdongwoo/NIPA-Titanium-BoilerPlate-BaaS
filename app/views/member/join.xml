@@ -4,33 +4,33 @@
 		<View id="mainView" class="mainView">
 			<View id="joinForm" class="joinForm">
 				<View class="formRow">
-					<Lable class="leftLable" text="ID" />
+					<Label class="leftLabel" text="ID" />
 					<TextField id="userId" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Lable class="leftLable" text="Password" />
+					<Label class="leftLabel" text="Password" />
 					<TextField id="userPw" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Lable class="leftLable" text="Repeat" />
+					<Label class="leftLabel" text="Repeat" />
 					<TextField id="userPwRepeat" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Lable class="leftLable" text="Name" />
+					<Label class="leftLabel" text="Name" />
 					<TextField id="userName" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Lable class="leftLable" text="Email" />
+					<Label class="leftLabel" text="Email" />
 					<TextField id="userEmail" class="rightInput" />
 				</View>
 				<View class="buttonRow">
 					<View class="button bgBlue">
-						<Lable class="buttonText" text="Sign Up">
+						<Label class="buttonText" text="Sign Up" />
 					</View>
 				</View>
 				<View class="buttonRow">
 					<View class="button bgRed">
-						<Lable class="buttonText" text="Cancel">
+						<Label class="buttonText" text="Cancel" />
 					</View>
 				</View>
 			</View>
