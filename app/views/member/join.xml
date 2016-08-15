@@ -1,5 +1,5 @@
 <Alloy>
-	<View id="window" class="container">
+	<Window id="window" class="container">
 		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		<View id="mainView" class="mainView">
 			<View id="joinForm" class="joinForm">
@@ -35,5 +35,5 @@
 				</View>
 			</View>
 		</View>
-	</View>
+	</Window>
 </Alloy>

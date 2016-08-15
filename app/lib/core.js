@@ -263,7 +263,7 @@ var APP = {
    * currentLanguage
    * @type {String}
    */
-  currentLanguage: Titanium.Locale.getCurrentLanguage().toLowerCase().substr(0, 2) || "en",
+  currentLanguage: "ko",//Titanium.Locale.getCurrentLanguage().toLowerCase().substr(0, 2) || "en",
   /**
    * memment library
    * @type {Object}

@@ -1,27 +1,27 @@
 <Alloy>
-	<View id="window" class="container">
+	<Window id="window" class="container">
 		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		<View id="mainView" class="mainView">
 			<View id="joinForm" class="joinForm">
 				<View class="formRow">
-					<Label class="leftLabel" text="ID" />
+					<Label class="leftLabel" text="L('join_lb_id')" />
 					<TextField id="userId" class="rightInput" />
 				</View>
 				<View class="formRow">
-					<Label class="leftLabel" text="Password" />
+					<Label class="leftLabel" text="L('join_lb_pw')" />
 					<TextField id="userPw" class="rightInput" />
 				</View>
 				<View class="buttonRow">
 					<View class="button bgBlue">
-						<Label class="buttonText" text="Login" />
+						<Label class="buttonText" text="L('join_btn_login')" />
 					</View>
 				</View>
 				<View class="buttonRow">
 					<View class="button bgRed">
-						<Label class="buttonText" text="Cancel" />
+						<Label class="buttonText" text="L('join_btn_join')" />
 					</View>
 				</View>
 			</View>
 		</View>
-	</View>
+	</Window>
 </Alloy>

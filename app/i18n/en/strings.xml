@@ -39,6 +39,10 @@
 	<string name="c_youWannaSendPhoto">사진을 전송하시겠습니까?</string>
 	<string name="c_msgSendingPhoto">전송 중입니다. 잠시만 기다려주세요.</string>
 
+	<string name="c_requestStoragePerm">다양한 기능을 제공하기 위해서 저장권한이 필요합니다.</string>
+	<string name="c_requestStorageSetting">저장권한이 필요합니다. 설정열기를 눌러서 권한-저장을 허용해주세요.</string>
+	<string name="c_requestStorageSettingsOpen">설정열기</string>
+
 	<!-- ///기타 공통된 몇가지 -->
 	<string name="c_emptyText">빈 문자열 입니다.</string>
 
@@ -68,5 +72,11 @@
 	<string name="ps_failCancle">취소했습니다.</string>
 	<string name="ps_failNotSuportCamera">장치가 카메라를 지원하지 않습니다.</string>
 	<string name="ps_deniedPermission">카메라를 사용할 권한이 없습니다.</string>
-	
+
+	<!-- Join -->
+	<string name="join_lb_id">User ID</string>
+	<string name="join_lb_pw">Password</string>
+	<string name="join_btn_login">SIGN IN</string>
+	<string name="join_btn_join">SIGN UP</string>
+
 </resources>
