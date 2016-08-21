@@ -26,9 +26,35 @@ $.init = function() {
 	}
 };
 
+CTX.doLogin = function() {
+	var userId = $.userId.value;
+	var userPw = $.userPw.value;
+
+	if (userId && userPw) {
+		// event
+		APP.UserM.on('login:fail', function() {
+			APP.UserM.off('login:fail',arguments.callee);
+			APP.alert(L("join_msg_failed"));
+		});
+		// login
+		APP.openLoading();
+		APP.UserM.login({
+			username: userId,
+			password: userPw
+		});
+	} else {
+		// not filled
+		APP.alert(L("join_msg_required")).then(function() {
+			if (!userId) $.userId.focus();
+			else if (!userPw) $.userPw.focus();
+		});
+	}
+}
+
 CTX.openSignUp = function() {
-	CTX.signUpView || (CTX.signUpView = Alloy.createController('member/join').getView());
-	CTX.signUpView.open();
+	APP.joinView = Alloy.createController('member/join').getView();
+	APP.joinView.open();
+	$.getView().close();
 };
 
 /**

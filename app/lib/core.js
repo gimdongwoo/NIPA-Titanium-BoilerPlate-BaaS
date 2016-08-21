@@ -449,8 +449,8 @@ var APP = {
     });
     // then login fail, open login view
     APP.UserM.on('login:fail', function() {
+      APP.UserM.off('login:fail',arguments.callee);
       APP.requiredLogin();
-      //APP.UserM.off('login:fail',arguments.callee);
     });
     // user model persistance
     APP.UserM.on('change', function() {

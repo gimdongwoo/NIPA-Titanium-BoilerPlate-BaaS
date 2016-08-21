@@ -46,7 +46,6 @@ exports.definition = {
         var thisModel = this;
         var failCount = 0;
         var errorFn = function (error) {
-          APP.closeLoading();
           Ti.API.error(error);
           // 101 : invaild session
           // 209 : invaild session token
@@ -70,6 +69,7 @@ exports.definition = {
             APP.SettingsM.set('User_sessionToken', undefined).save();
             APP.log("error", 'Login Fail : ' + JSON.stringify(error));
             thisModel.trigger("login:fail");
+            APP.closeLoading();
           }
         };
         var withdrawChk = function (user) {

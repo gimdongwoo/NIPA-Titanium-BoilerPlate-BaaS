@@ -13,7 +13,7 @@
 				</View>
 				<View class="buttonRow">
 					<View class="button bgBlue">
-						<Label class="buttonText" text="L('join_btn_login')" />
+						<Label class="buttonText" text="L('join_btn_login')" onClick="CTX.doLogin" />
 					</View>
 				</View>
 				<View class="buttonRow">
