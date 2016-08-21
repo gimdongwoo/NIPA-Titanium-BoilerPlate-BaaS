@@ -27,6 +27,18 @@ $.init = function() {
 };
 
 /**
+* scroll end for position save
+*/
+CTX.listViewScrollend = function (e) {
+  if (OS_IOS) {
+    CTX.scrollItemIndex = e.firstVisibleItemIndex + e.visibleItemCount;
+  } else {
+    CTX.scrollItemIndex = e.firstVisibleItemIndex;
+  }
+  CTX.lastVisibleItemIndex = e.firstVisibleItemIndex + e.visibleItemCount;
+};
+
+/**
  * init, fetch, 리스너 등록/해제
  */
 CTX.open = function() {
@@ -39,22 +51,62 @@ CTX.close = function() {
 }
 
 /**
+* handleNavigation event
+*/
+CTX.handleNavigation = function (e) {
+  if (e.name == "listview/alarm") {
+    handleNavigation(e);
+  } else if (APP.previousType == "listview/alarm") {
+    _.defer(handleNavigation, e);
+  }
+
+  function handleNavigation(e) {
+    if (e.name == "listview/alarm") {
+      CTX.open();
+    }
+
+    // pullToRefresh
+    if (OS_ANDROID || (OS_IOS && !CTX.pullToRefresh)) {
+      $.mainView.removeAllChildren();
+      if (CTX.ptr) {
+        CTX.ptr.removeView($.listView);
+        CTX.ptr.destroy();
+        CTX.ptr = null;
+      }
+      if (e.name == "listview/alarm") {
+        CTX.pullToRefresh = true;
+
+        CTX.ptr = Alloy.createWidget("nl.fokkezb.pullToRefresh", "widget", {
+          id: "ptr",
+          children: [ $.listView ]
+        });
+        CTX.ptr.setParent($.mainView);
+        CTX.ptr.on("release", CTX.fetchRecentQuestion);
+
+        // restore position
+        if (CTX.scrollItemIndex) {
+          $.listView.scrollToItem(1, CTX.scrollItemIndex, {animated:false});
+        }
+      }
+    }
+  }
+}
+
+/**
 * open event
 */
-$.getView().addEventListener('open', function() {
-	CTX.open();
-});
-$.getView().addEventListener('close', function() {
-	CTX.close();
-
-});
+Ti.App.addEventListener('handleNavigation', CTX.handleNavigation);
 
 /**
 * code implementation
 */
-var define = "listview_alarm";
+var define = "listview_pulltorefresh";
 APP.Settings.evalCode && APP.Settings.evalCode[define] && APP.Settings.evalCode[define].version >= APP.VERSION && eval(APP.Settings.evalCode[define].code);
 
 
 // Kick off the init
 $.init();
+
+//! required exports.open, exports.close
+exports.open = CTX.open;
+exports.close = CTX.close;
