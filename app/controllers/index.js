@@ -338,16 +338,3 @@ function createContentWrapper() {
     return $.ContentWrapper;
   }
 }
-
-/**
- * 전역 리스너
- */
-// APP.guideForChildren
-Ti.App.addEventListener('handleNavigation', function (e){
-  //탭이동시 열려있다면 닫아야하니 필요하다.
-  if (APP.guideForChildren) {
-    _.defer(function () {
-      APP.guideForChildren.hide();
-    });
-  }
-});

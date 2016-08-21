@@ -491,12 +491,6 @@ var APP = {
       APP.joinView = null;
     }
 
-    // childView close
-    if (APP.childView) {
-      APP.childView.close();
-      APP.childView = null;
-    }
-
     if(isJoining || APP.currentStack < 0){
       // The initial screen to show
       APP.handleNavigation(0);
@@ -510,116 +504,6 @@ var APP = {
     APP.joinView = Alloy.createController('member/login').getView();
     APP.joinView.open();
     APP.closeMainWindow();
-  },
-  /**
-   * children add window displayed after login success
-   */
-  requiredChildren: function(isJoining) {
-    APP.Navigator.closeAll();
-
-    APP.openChildrenInput({ isJoining: true });
-    APP.closeLoading();
-    APP.closeMainWindow();
-  },
-  /**
-   * 사용중에 자녀정보입력하기를 통해서 childInput을 보이게함.
-   */
-  openChildrenInput: function(params) {
-    // block double run
-    if (APP.isNowChildrenInput) return;
-    APP.isNowChildrenInput = true;
-
-    params || (params = {});
-    var isJoining = params && params.isJoining ? true : false;
-    // APP.childView = Alloy.createController('children/childInput',{isJoining : isJoining, parentWindow: parentWindow}).getView();
-    // APP.childView.open();
-
-    // event
-    Ti.App.addEventListener('complete:children', function (result){
-      Ti.App.removeEventListener('complete:children', arguments.callee);
-      APP.isNowChildrenInput = false;
-
-      var _childInfoes = result['childInfoes'];
-      var _areaInfo = result['areaInfo'];
-      var _areaSelect = result['areaSelect'];
-      // ID만 추출
-      var _areaIds = _.map(_areaSelect, function(_area) {
-        return _area.id;
-      });
-
-      APP.openLoading();
-      Parse.pCloud.run('childInstituteSave', {
-        childInfos : _childInfoes,
-        AreaId : _areaInfo['id'],
-        AreaIds : _areaIds,
-      }).then(function (userM) {
-        APP.log("debug", "childInstituteSave success");
-        if(isJoining){ //회원가입중 완료.
-          APP.UserM.trigger("login:init", userM, isJoining);
-        }else{
-          if (userM) APP.UserM.reset(userM);
-          APP.closeLoading();
-
-          //자녀입력창만 별개로 띄워서 완료.시.
-          if (APP.childView) {
-            APP.childView.close();
-            APP.childView = null;
-          }
-
-          //혹시없다면 네비..
-          if(APP.currentStack < 0){
-            // The initial screen to show
-            APP.handleNavigation(0);
-          }
-          // 변경반영해야지.
-          APP.UserM.trigger('modify:childrendIds');
-
-          // callback
-          _.defer(function() {
-            params.success && params.success();
-          });
-        }
-      }, function (error) {
-        // 에러시 재시도
-        APP.log("error", error);
-        APP.closeLoading();
-        return APP.openChildrenInput(params);
-      });
-    });
-
-    APP.childView = Alloy.createController('join/selectArea', {isJoining: isJoining});
-    APP.childView.openWindow({});
-  },
-  /**
-  * 자녀정보가 있어야만 열수 있는 뷰의 처리
-  */
-  requiredChildrenForView: function(_callback, _subType, _hidecallback) {
-    if(APP.UserM.hasNotChild()){
-      APP.guideForChildren = APP.guideForChildren || Alloy.createController('guideView',{parentView:APP.ContentWrapper, type:'children'});
-      APP.closeLoading();
-      APP.guideForChildren.show(_callback, _subType, _hidecallback);
-      //TODO 자녀 입력창을 띄우는것은. 콜백에서 호출되는 것.(question/post 등)의 오픈리스너에서 처리되고있다.
-    }else{
-      //else do
-      _callback && _callback('hasChild');
-    }
-  },
-  // postQustion
-  openPostQuestion: function(params) {
-    APP.guideViewEx = APP.guideViewEx || Alloy.createController('guideViewEx',{ parentView: APP.MainWindow });
-    var guide_prop = {
-      type: 'question',
-      action: function() {
-        //TODO 자녀 입력창을 띄우는것은. 콜백에서 호출되는 것.(question/post 등)의 오픈리스너에서 처리되고있다.
-        APP.Navigator.open("question/post", params || {} );
-      }
-    };
-    if(APP.UserM.hasNotChild()){
-      guide_prop['actionBtnText'] = L('qc_guide_btnText');
-    }else{
-      guide_prop['actionBtnText'] = L('q_guide_btnText');
-    }
-    APP.guideViewEx.show(guide_prop);
   },
   /**
    * Determines the device characteristics
