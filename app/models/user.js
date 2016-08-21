@@ -42,6 +42,27 @@ exports.definition = {
         this.clear({silent: true});   // change event avoid
         this.set(_.extend({id: user.id, objectId: user.id}, user.attributes));
       },
+      join: function (options){
+        var thisModel = this;
+
+        if(options && options.username && options.password){
+          Parse.pCloud.run('signUpUser', options, {
+          success: function (user) {
+            APP.log("debug", "user create :", user);
+            // login
+            thisModel.login(options);
+          },
+          error: function (error) {
+            APP.log("error", "user create :", error);
+            thisModel.trigger("login:fail", error);
+            APP.closeLoading();
+          }
+        });
+        } else {
+          thisModel.trigger("login:fail");
+          APP.closeLoading();
+        }
+      },
       login: function (options){
         var thisModel = this;
         var failCount = 0;

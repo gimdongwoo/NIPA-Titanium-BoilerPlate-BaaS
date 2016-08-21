@@ -34,7 +34,7 @@ CTX.doLogin = function() {
 		// event
 		APP.UserM.on('login:fail', function() {
 			APP.UserM.off('login:fail',arguments.callee);
-			APP.alert(L("join_msg_failed"));
+			APP.alert("join_msg_loginFailed");
 		});
 		// login
 		APP.openLoading();
@@ -44,7 +44,7 @@ CTX.doLogin = function() {
 		});
 	} else {
 		// not filled
-		APP.alert(L("join_msg_required")).then(function() {
+		APP.alert("join_msg_required").then(function() {
 			if (!userId) $.userId.focus();
 			else if (!userPw) $.userPw.focus();
 		});

@@ -25,12 +25,12 @@
 				</View>
 				<View class="buttonRow">
 					<View class="button bgBlue">
-						<Label class="buttonText" text="L('join_btn_join')" />
+						<Label class="buttonText" text="L('join_btn_join')" onClick="CTX.onClickJoin" />
 					</View>
 				</View>
 				<View class="buttonRow">
 					<View class="button bgRed">
-						<Label class="buttonText" text="L('join_btn_cancel')" />
+						<Label class="buttonText" text="L('join_btn_cancel')" onClick="CTX.onClickCancel" />
 					</View>
 				</View>
 			</View>
