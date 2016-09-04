@@ -1,10 +1,14 @@
 // Example express application adding the parse-server module to expose Parse
 // compatible API routes.
 
+// parse server
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
 var S3Adapter = require('parse-server').S3Adapter;
+
+// parse dashboard
+var ParseDashboard = require('parse-dashboard');
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -12,6 +16,7 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
+// parse server
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
@@ -43,6 +48,24 @@ var api = new ParseServer({
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
+// parse dashboard
+var dashboard = new ParseDashboard({
+  apps: [
+    {
+      appId: process.env.APP_ID || 'myAppId',
+      masterKey: process.env.MASTER_KEY || 'myMasterKey',
+      serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',
+      appName: process.env.APP_NAME || 'MyApp',
+    }
+  ],
+  users: [
+    {
+      user: process.env.ADM_USER || '',
+      pass: process.env.ADM_PASS || ''
+    }
+  ]
+});
+
 var app = express();
 
 // Serve static assets from the /public folder
@@ -62,6 +85,9 @@ app.get('/', function(req, res) {
 app.get('/test', function(req, res) {
   res.sendFile(path.join(__dirname, '/public/test.html'));
 });
+
+// make the Parse Dashboard available at /dashboard
+app.use('/dashboard', dashboard);
 
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
