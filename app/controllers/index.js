@@ -68,8 +68,8 @@ function createMainWindow() {
         // this.el.activeTab.open(win, options);
         win.open(options);
       },
-      addEventListener: null,
-      removeEventListener: null
+      addEventListener: function() {},
+      removeEventListener: function() {}
     };
 
     return UI.init();
@@ -94,10 +94,10 @@ function createMainWindow() {
       close: function() {
         this.el.close();
       },
-      add: null,
-      remove: null,
-      addEventListener: null,
-      removeEventListener: null
+      add: function() {},
+      remove: function() {},
+      addEventListener: function() {},
+      removeEventListener: function() {}
     };
 
     return UI.init();
@@ -136,7 +136,7 @@ function createTabs() {
         options && this.initTabs(options);
         return this;
       },
-      clear: null,
+      clear: function() {},
       setIndex: function(tabId) {
         if (_.isNumber(tabId)) this.Tabs[tabId].setActive(true);
         this.el.setIndex(tabId);
@@ -226,8 +226,8 @@ function createTabs() {
 
         return this;
       },
-      clear: null,
-      setIndex: null,
+      clear: function() {},
+      setIndex: function() {},
       open: function() {
         this.GlobalWrapper.add(this.Wrapper);
       },
@@ -264,8 +264,8 @@ function createGlobalWrapper() {
         // TODO tabgroup windows animiate
 
       },
-      addEventListener: null,
-      removeEventListener: null
+      addEventListener: function() {},
+      removeEventListener: function() {}
     };
 
     return UI.init();

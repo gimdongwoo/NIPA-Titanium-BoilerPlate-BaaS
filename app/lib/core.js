@@ -711,7 +711,7 @@ var APP = {
   buildTabs: function(_nodes) {
     APP.log("debug", "APP.buildTabs");
 
-    APP.Tabs.init({
+    APP.Tabs && APP.Tabs.init({
       nodes: _nodes,
       more: APP.Settings.colors.theme == "dark" ? "/icons/white/more.png" : "/icons/black/more.png",
       color: {
@@ -723,8 +723,8 @@ var APP = {
     });
 
     // Add a handler for the tabs (make sure we remove existing ones first)
-    APP.Tabs.Wrapper.removeEventListener("click", APP.handleTabClick);
-    APP.Tabs.Wrapper.addEventListener("click", APP.handleTabClick);
+    APP.Tabs && APP.Tabs.Wrapper.removeEventListener("click", APP.handleTabClick);
+    APP.Tabs && APP.Tabs.Wrapper.addEventListener("click", APP.handleTabClick);
   },
   /**
    * Builds a slide menu
@@ -733,7 +733,7 @@ var APP = {
   buildMenu: function(_nodes) {
     APP.log("debug", "APP.buildMenu");
 
-    APP.SlideMenu.init({
+    APP.SlideMenu && APP.SlideMenu.init({
       nodes: _nodes,
       color: {
         headingBackground: APP.Settings.colors.primary,
@@ -742,17 +742,17 @@ var APP = {
     });
 
     // Remove the TabGroup
-    APP.Tabs.close();
+    APP.Tabs && APP.Tabs.close();
 
     // Move everything down to take up the TabGroup space
-    APP.Tabs.hide();
+    APP.Tabs && APP.Tabs.hide();
 
     // Add a handler for the nodes (make sure we remove existing ones first)
-    APP.SlideMenu.Nodes.removeEventListener("click", APP.handleMenuClick);
-    APP.SlideMenu.Nodes.addEventListener("click", APP.handleMenuClick);
+    APP.SlideMenu && APP.SlideMenu.Nodes.removeEventListener("click", APP.handleMenuClick);
+    APP.SlideMenu && APP.SlideMenu.Nodes.addEventListener("click", APP.handleMenuClick);
 
     // Listen for gestures on the main window to open/close the slide menu
-    // APP.GlobalWrapper.addEventListener("swipe", function(_event) {
+    // APP.GlobalWrapper && APP.GlobalWrapper.addEventListener("swipe", function(_event) {
     //   if(APP.SlideMenuEngaged) {
     //     if(_event.direction == "right") {
     //       APP.openMenu();
@@ -769,9 +769,9 @@ var APP = {
     APP.log("debug", "APP.rebuild");
 
     if(APP.Settings.useSlideMenu) {
-      APP.SlideMenu.clear();
+      APP.SlideMenu && APP.SlideMenu.clear();
     }
-    APP.Tabs.clear();
+    APP.Tabs && APP.Tabs.clear();
 
     // // Undo removal of TabGroup
     // APP.Tabs.close();
@@ -894,10 +894,10 @@ var APP = {
 
       if(APP.Settings.useSlideMenu) {
         // Select the row for the requested item
-        APP.SlideMenu.setIndex(_id);
+        APP.SlideMenu && APP.SlideMenu.setIndex(_id);
       } else {
         // Move the tab selection indicator
-        APP.Tabs.setIndex(_id);
+        APP.Tabs && APP.Tabs.setIndex(_id);
       }
 
       // Closes any loading screens
@@ -1394,9 +1394,9 @@ var APP = {
    * Opens the Slide Menu
    */
   openMenu: function() {
-    APP.SlideMenu.Wrapper.left = "0dp";
-    APP.SlideMenu.Wrapper.setAccessibilityHidden(false);
-    APP.GlobalWrapper.animate({
+    APP.SlideMenu && APP.SlideMenu.Wrapper.left = "0dp";
+    APP.SlideMenu && APP.SlideMenu.Wrapper.setAccessibilityHidden(false);
+    APP.GlobalWrapper && APP.GlobalWrapper.animate({
       left: "200dp",
       duration: 250,
       curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
@@ -1408,12 +1408,12 @@ var APP = {
    * Closes the Slide Menu
    */
   closeMenu: function() {
-    APP.GlobalWrapper.animate({
+    APP.GlobalWrapper && APP.GlobalWrapper.animate({
       left: "0dp",
       duration: 250,
       curve: Ti.UI.ANIMATION_CURVE_EASE_IN_OUT
     });
-    APP.SlideMenu.Wrapper.setAccessibilityHidden(true);
+    APP.SlideMenu && APP.SlideMenu.Wrapper.setAccessibilityHidden(true);
     APP.SlideMenuOpen = false;
   },
   /**
