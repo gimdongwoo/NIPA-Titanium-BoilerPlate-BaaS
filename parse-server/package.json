@@ -12,7 +12,7 @@
     "express": "~4.14.0",
     "kerberos": "~0.0.0",
     "parse": "~1.9.1",
-    "parse-server": "2.2.18",
+    "parse-server": "2.2.19",
     "underscore": "~1.4.2",
     "moment": "~1.7.2",
     "applinks-metatag": "~0.0.0",
