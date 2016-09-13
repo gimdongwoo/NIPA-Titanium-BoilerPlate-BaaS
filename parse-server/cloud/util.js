@@ -5,40 +5,44 @@ var _ = require('underscore');
 */
 var log = function(_request, _severity, _text, _text1, _text2, _text3, _text4, _text5) {
   var fn = console.log;
-  var fnP = _request && _request.log && _request.log.info;
+  // var fnP = _request && _request.log;
   var pref = "";
-  switch(_severity.toLowerCase()) {
-    case "debug":
-      if (process.env.NODE_ENV == "production") return;
-      pref = "[DEBUG] ";
-      break;
-    case "error":
-      fn = console.error;
-      fnP = _request && _request.log && _request.log.error;
-      pref = "[ERROR] ";
-      break;
+  var _severity = _severity ? _severity.toLowerCase() : "info";
+  switch(_severity) {
     case "info":
       pref = "[INFO] ";
       break;
-    case "trace":
-      pref = "[TRACE] ";
+    case "error":
+      fn = console.error;
+      pref = "[ERROR] ";
       break;
     case "warn":
       pref = "[WARN] ";
       break;
-    default:
-      pref = "[LOG] ";
+    case "verbose":
+      pref = "[VERBOSE] ";
+      break;
+    case "debug":
+      pref = "[DEBUG] ";
+      break;
+    case "silly":
+      pref = "[SILLY] ";
       break;
   }
-  if (_text && _.isObject(_text)) _text = JSON.stringify(_text);
-  if (_text1 && _.isObject(_text1)) _text1 = JSON.stringify(_text1);
-  if (_text2 && _.isObject(_text2)) _text2 = JSON.stringify(_text1);
-  if (_text3 && _.isObject(_text3)) _text3 = JSON.stringify(_text1);
-  if (_text4 && _.isObject(_text4)) _text4 = JSON.stringify(_text1);
-  if (_text5 && _.isObject(_text5)) _text5 = JSON.stringify(_text1);
+  _text && _.isObject(_text) && (_text = JSON.stringify(_text));
+  _text1 && _.isObject(_text1) && (_text1 = JSON.stringify(_text1));
+  _text2 && _.isObject(_text2) && (_text2 = JSON.stringify(_text1));
+  _text3 && _.isObject(_text3) && (_text3 = JSON.stringify(_text1));
+  _text4 && _.isObject(_text4) && (_text4 = JSON.stringify(_text1));
+  _text5 && _.isObject(_text5) && (_text5 = JSON.stringify(_text1));
 
-  var content = pref + (_text || "") + (_text1 || "") + (_text2 || "") + (_text3 || "") + (_text4 || "") + (_text5 || "");
-  return fnP ? fnP(content) : fn(content);
+  var content = pref + " " + (_text ? _text + " " : "") + (_text1 ? _text1 + " " : "") + (_text2 ? _text2 + " " : "") + (_text3 ? _text3 + " " : "") + (_text4 ? _text4 + " " : "") + (_text5 ? _text5 + " " : "");
+
+  if (_request && _request.jobManager) _request.jobManager.log(content);
+
+  if (process.env.NODE_ENV == "production" && _severity == "debug") return;
+  // return fnP ? fnP(_severity, content) : fn(content);
+  return fn(content);
 }
 module.exports.log = log;
 
@@ -76,19 +80,22 @@ module.exports.returnError = function(_object) {
 * delay using promise (setTimeout didn't support)
 */
 var delay = function(delayTime) {
-  var delayUntil;
+  // var delayUntil;
   var delayPromise;
 
   var _delay = function () {
-    if (Date.now() >= delayUntil) {
+    // if (Date.now() >= delayUntil) {
+    //   delayPromise.resolve();
+    //   return;
+    // } else {
+    //   process.nextTick(_delay);
+    // }
+    setTimeout(function(){
       delayPromise.resolve();
-      return;
-    } else {
-      process.nextTick(_delay);
-    }
+    }, delayTime);
   }
 
-  delayUntil = Date.now() + delayTime;
+  // delayUntil = Date.now() + delayTime;
   delayPromise = new Parse.Promise();
   _delay();
   return delayPromise;
