@@ -280,11 +280,6 @@ var APP = {
    */
   isUserLogin: false,
   /**
-   * if fetch rank, for change Area and Children Of Setting
-   * @type {Boolean}
-   */
-  rankMustFetch : false,
-  /**
    * Initializes the application
    */
   init: function() {
@@ -424,14 +419,6 @@ var APP = {
       APP.log("debug", "User login:init : " + JSON.stringify(userM));
       if (userM) APP.UserM.reset(userM);
 
-      // lbh return
-      if (APP.isGoLBH) return;
-
-      // areaCheck
-      if (!APP.UserM.get("AreaId")) {
-        return APP.openChildrenInput({ isJoining: true });
-      }
-
       // Defers invoking the function until the current call stack has cleared
       if (!APP.isUserLogin) {
         _.defer(function() {
@@ -439,13 +426,6 @@ var APP = {
         });
       }
       APP.isUserLogin = true;
-
-      //APP.UserM.off('login:init',arguments.callee);
-
-      if(!isJoining){
-        //notify change userdata for rank
-        APP.UserM.trigger('modify:childrendIds');
-      }
     });
     // then login fail, open login view
     APP.UserM.on('login:fail', function() {

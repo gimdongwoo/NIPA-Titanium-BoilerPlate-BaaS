@@ -101,7 +101,7 @@ exports.definition = {
             APP.log("debug", 'Login User Successful : ' + user.id + ' ' + user.get("name"));
 
             // login success
-            thisModel.trigger("login:init")
+            thisModel.trigger("login:init");
 
             // installation에 유저정보 저장
             PUSH.setUserInfo(thisModel);
@@ -177,10 +177,6 @@ exports.definition = {
             //
           }
           this.set(UserM, {silent: true});  // change event avoid
-
-          // 자녀수를 확인해서 등록된 자녀가 있을때 메인을 표시
-          // this.checkChild();
-          // this.checkArea();
           this.trigger("login:init");
         }
       },

@@ -1,6 +1,9 @@
 /**
  * common
- */
+*/
+'Window[platform=android]': {
+	windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_RESIZE
+}
 
 ".container": {
 	layout:"composite", width: Ti.UI.FILL,	height: Ti.UI.FILL,
@@ -18,7 +21,10 @@
 
 ".joinForm": {
 	width: Ti.UI.FILL, height: Ti.UI.FILL,
+	top: 0,
 	layout: "vertical",
+	contentHeight: Ti.UI.SIZE,
+	showVerticalScrollIndicator: true,
 }
 
 ".formRow": {
@@ -53,4 +59,8 @@
 
 ".bgRed": {
 	backgroundColor: "red"
+}
+
+".password": {
+	passwordMask: true
 }

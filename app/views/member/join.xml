@@ -2,18 +2,18 @@
 	<Window id="window" class="container">
 		<Require type="widget" src="com.mcongrove.navigationBar" id="NavigationBar" />
 		<View id="mainView" class="mainView">
-			<View id="joinForm" class="joinForm">
+			<ScrollView id="joinForm" class="joinForm">
 				<View class="formRow">
 					<Label class="leftLabel" text="L('join_lb_id')" />
 					<TextField id="userId" class="rightInput" />
 				</View>
 				<View class="formRow">
 					<Label class="leftLabel" text="L('join_lb_pw')" />
-					<TextField id="userPw" class="rightInput" />
+					<TextField id="userPw" class="rightInput password" />
 				</View>
 				<View class="formRow">
 					<Label class="leftLabel" text="L('join_lb_pwrepeat')" />
-					<TextField id="userPwRepeat" class="rightInput" />
+					<TextField id="userPwRepeat" class="rightInput password" />
 				</View>
 				<View class="formRow">
 					<Label class="leftLabel" text="L('join_btn_name')" />
@@ -33,7 +33,7 @@
 						<Label class="buttonText" text="L('join_btn_cancel')" onClick="CTX.onClickCancel" />
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 		</View>
 	</Window>
 </Alloy>
