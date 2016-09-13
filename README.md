@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/gimdongwoo/NIPA-Titanium-BoilerPlate-BaaS.png?label=ready&title=Ready)](https://waffle.io/gimdongwoo/NIPA-Titanium-BoilerPlate-BaaS)
 # NIPA-Titanium-BoilerPlate-BaaS
 Titanium mobile application develop framework Boiler Plate Project using BaaS - Support by NIPA (http://www.nipa.kr/)
 
