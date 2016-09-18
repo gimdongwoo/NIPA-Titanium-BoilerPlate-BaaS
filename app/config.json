@@ -4,7 +4,8 @@
       "primary": "#0000ff",
       "secondary": "#9999ff",
       "text": "#FFF"
-    }
+    },
+    "minVersion": "1.9.2"
   },
   "env:development": {},
   "env:test": {},

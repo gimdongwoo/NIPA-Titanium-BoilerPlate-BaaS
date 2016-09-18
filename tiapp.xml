@@ -127,9 +127,9 @@
 		<target device="mobileweb">false</target>
 		<target device="windows">false</target>
 	</deployment-targets>
-	<sdk-version>5.4.0.GA</sdk-version>
+	<sdk-version>5.5.0.GA</sdk-version>
 	<plugins>
-		<plugin version="1.9.1">ti.alloy</plugin>
+		<plugin version="1.0">ti.alloy</plugin>
 	</plugins>
 	<property name="Configuration_File" type="string">app.json</property>
 	<property name="Parse_ServerUrl" type="string">http://parseserver-bsmcf-env.us-east-1.elasticbeanstalk.com/parse</property>
