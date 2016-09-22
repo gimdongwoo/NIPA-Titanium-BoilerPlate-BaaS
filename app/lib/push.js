@@ -72,11 +72,6 @@ exports.pushRecieved = function(_data, isClick) {
 		return;
 	}
 
-	// Alram colleciton re-fetch
-	if (APP.UserM.id) {
-		Alloy.Collections.instance('Alarms').fetch({ query: { where : { UserId : APP.UserM.id } } });
-	}
-
 	if (!isClick) {
 		// 1분 이내에 온것만 푸시로 띄우자 (쌓여있는거 무시하기)
 		var now = new Date();
