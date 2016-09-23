@@ -787,6 +787,7 @@ var APP = {
 
     APP.setupDatabase();
     APP.loadContent();
+    if (!APP.isUserLogin) return;
     APP.build();
     APP.handleNavigation(0);
   },
