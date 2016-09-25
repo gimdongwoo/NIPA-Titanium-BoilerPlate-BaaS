@@ -1375,7 +1375,7 @@ var APP = {
    * Opens the Slide Menu
    */
   openMenu: function() {
-    APP.SlideMenu && APP.SlideMenu.Wrapper.left = "0dp";
+    APP.SlideMenu && (APP.SlideMenu.Wrapper.left = "0dp");
     APP.SlideMenu && APP.SlideMenu.Wrapper.setAccessibilityHidden(false);
     APP.GlobalWrapper && APP.GlobalWrapper.animate({
       left: "200dp",
