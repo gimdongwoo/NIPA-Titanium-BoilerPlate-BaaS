@@ -39,17 +39,6 @@ CTX.close = function() {
 }
 
 /**
-* open event
-*/
-$.getView().addEventListener('open', function() {
-	CTX.open();
-});
-$.getView().addEventListener('close', function() {
-	CTX.close();
-	
-});
-
-/**
 * code implementation
 */
 var define = "default";
@@ -58,3 +47,7 @@ APP.Settings.evalCode && APP.Settings.evalCode[define] && APP.Settings.evalCode[
 
 // Kick off the init
 $.init();
+
+//! required exports.open, exports.close
+exports.open = CTX.open;
+exports.close = CTX.close;

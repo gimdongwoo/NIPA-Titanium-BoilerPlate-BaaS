@@ -3,7 +3,7 @@ var Q = require('q');
 
 exports.definition = {
 config: {
-    "URL": "https://api.parse.com/1/installations",
+    "URL": Ti.App.Properties.getString('Parse_ServerUrl') + "/installations",
     //"debug": 1,
     "adapter": {
             "type": "restapi",

@@ -15,28 +15,6 @@ var CONFIG = arguments[0] || {};
 var navigation, theme;
 var deviceVersion = parseInt(Titanium.Platform.version.split(".")[0], 10);
 
-if(CONFIG.image) {
-  $.title = Ti.UI.createImageView({
-    image: CONFIG.image,
-    height: "26dp",
-    width: Ti.UI.SIZE,
-    top: "10dp",
-    bottom: "10dp",
-    preventDefaultImage: true
-  });
-} else {
-  $.title = Ti.UI.createLabel({
-    font: {
-      fontSize: "18dp",
-      fontFamily: "HelveticaNeue-Medium"
-    },
-    color: theme == "white" ? "#FFF" : "#000",
-    textAlign: "center",
-    text: CONFIG.text ? CONFIG.text : "",
-    left: "40dp", right: "40dp"
-  });
-}
-
 /**
  * Adds the navigation bar to the passed view
  * @param {Object} _view The view to add the navigation bar to
@@ -85,9 +63,46 @@ $.setBackgroundColor = function(_colorPrimary, _theme, _colorSecondary) {
  * Sets the title
  * @param {Object} _text The title text
  */
-$.setTitle = function(_text, _textStyle) {
-  $.title.text = _text || "";
-  if (_textStyle) $.title.applyProperties(_textStyle);
+$.setTitle = function(_text, _titleStyle) {
+  // clean
+  if($.title) {
+    $.titleView.remove($.title);
+    $.title = null;
+  }
+
+  if(_titleStyle.image) {
+    $.title = Ti.UI.createImageView({
+      // image: CONFIG.image,
+      height: "26dp",
+      width: Ti.UI.SIZE,
+      top: "10dp",
+      bottom: "10dp",
+      preventDefaultImage: true
+    });
+  } else {
+    $.title = Ti.UI.createLabel({
+      font: {
+        fontSize: "18dp",
+        fontFamily: "HelveticaNeue-Medium"
+      },
+      color: theme == "white" ? "#FFF" : "#000",
+      textAlign: "center",
+      text: _text || CONFIG.text || "",
+      left: "40dp", right: "40dp"
+    });
+
+    //dash포함시,짤림방지 ex) K-force(케이포스)수학클리닉,e-zone(이존)영어클리닉교습소
+    if (OS_ANDROID) {
+      $.title.applyProperties({
+        ellipsize: true,
+        wordWrap: false,
+        maxLines: 1
+      });
+    }
+  }
+
+  if (_titleStyle) $.title.applyProperties(_titleStyle);
+  $.titleView.add($.title);
 };
 
 
@@ -97,7 +112,7 @@ $.setTitle = function(_text, _textStyle) {
 //$.titleView 사용안하고, 추가된 요소 사용함. 필요형태 만들어서 전달.
 $.setViewCenter = function(titleView, top) {
   $.titleView.visible = false;
-  
+
   $.centerWrap.add(titleView);
   $.centerWrap.top = (typeof top === "number") ? top : 3.5; // height 47 이고 40짜리가 가운데로.
   $.centerWrap.visible = true;
@@ -107,7 +122,7 @@ $.setViewRight = function(rightView, viewWidth) {
   $.rightWarp.removeAllChildren();
   $.rightWarp.width = viewWidth || 48;
   $.rightWarp.top = 3.5; // height 47 이고 40짜리가 가운데로.
-  
+
   $.rightWarp.add(rightView);
 };
 
@@ -261,6 +276,7 @@ $.showAlarm = function(_callback, _imageStyle) {
     });
     // add events
     Ti.App.addEventListener('changeBadge', function(e){
+      Ti.API.debug('changeBadge event :', JSON.stringify(e));
       if (e.number == 0) {
         if (_imageStyle && _imageStyle.default) {
           $.alarmImage.applyProperties(_imageStyle.default);
@@ -406,10 +422,6 @@ function hexToHsb(_hex) {
   hsb.b = Math.round(hsb.b * 100);
 
   return hsb;
-}
-
-if($.title) {
-  $.titleView.add($.title);
 }
 
 // Move the UI down if iOS7+
