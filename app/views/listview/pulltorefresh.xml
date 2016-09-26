@@ -17,7 +17,15 @@
 						<Label bindId="es_info" id="subtitle" />
 					</ItemTemplate>
 
+					<ItemTemplate name="GameScoreTemplate">
+						<Label bindId="playerName" class="playerName" />
+						<Label bindId="score" class="score" />
+						<Label bindId="cheatMode" class="cheatMode" />
+					</ItemTemplate>
+
 				</Templates>
+
+				<ListSection id="GameScoreSection" headerTitle="GameScore"/>
 
 				<ListSection headerTitle="Fruit / Frutas">
 

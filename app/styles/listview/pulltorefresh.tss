@@ -29,3 +29,20 @@
     font: { fontFamily:'Arial', fontSize: '14dp' },
     left: '60dp', top: '25dp'
 }
+
+".playerName": {
+	color: 'black',
+	font: { fontFamily:'Arial', fontSize: '16dp' },
+	left: '10dp'
+}
+
+".score": {
+	color: 'black',
+	font: { fontFamily:'Arial', fontSize: '20dp', fontWeight:'bold' }
+}
+
+".cheatMode": {
+	color: 'black',
+	font: { fontFamily:'Arial', fontSize: '12dp', fontWeight:'bold' },
+	right: '10dp'
+}
