@@ -64,7 +64,7 @@ var dashboard = new ParseDashboard({
       pass: process.env.ADM_PASS || ''
     }
   ]
-});
+}, true); // allowInsecureHTTP
 
 var app = express();
 
