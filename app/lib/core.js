@@ -853,10 +853,6 @@ var APP = {
 
     APP.log("debug", "APP.handleNavigation | " + type);
 
-    if(type == 'question/post'){
-      return APP.openPostQuestion();
-    }
-
     // Requesting same screen as we're on
     if(_id == APP.currentStack) {
       // Closes any loading screens
