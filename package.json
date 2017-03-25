@@ -1,0 +1,32 @@
+{
+  "name": "nipa-titanium-boilerplate-baas",
+  "version": "1.0.0",
+  "description": "Titanium mobile application develop framework Boiler Plate Project",
+  "main": "index.js",
+  "dependencies": {
+    "alloy-sync-restapi": "^1.1.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gimdongwoo/NIPA-Titanium-BoilerPlate-BaaS.git"
+  },
+  "keywords": [
+    "mobile",
+    "titanium",
+    "bolierplate",
+    "nipa",
+    "ios",
+    "android",
+    "crossplatform"
+  ],
+  "author": "gimdongwoo <gimdongwoo@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/gimdongwoo/NIPA-Titanium-BoilerPlate-BaaS/issues"
+  },
+  "homepage": "https://github.com/gimdongwoo/NIPA-Titanium-BoilerPlate-BaaS#readme"
+}
