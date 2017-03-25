@@ -1,38 +1,29 @@
-'Window[platform=android]': {
-  windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN
-}
-
-"#MainWindow": {
-  backgroundColor: "#EEE",
-},
-"#MainWindow[platform=android]": {
-  navBarHidden: true,
-  exitOnClose: true
-},
-"#MainWindow[platform=android formFactor=tablet]": {
-  orientationModes: [
-    Ti.UI.LANDSCAPE_LEFT
-  ]
-},
-"#MainWindow[formFactor=handheld]": {
-  orientationModes: [
-    Ti.UI.PORTRAIT
-  ]
-},
 "#MainTapGroup": {
   backgroundColor: "#EEE",
-},
+}
 "#MainTapGroup[formFactor=handheld]": {
   orientationModes: [
     Ti.UI.PORTRAIT
   ]
-},
-"#GlobalWrapper": {
-  width: "100%"
-},
-"#ContentWrapper": {
-  top: "0dp",
-  bottom: "50dp",
-  zIndex: 0,
-  scrollingEnabled: false
+}
+
+"Window[platform=android]": {
+  windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_ADJUST_PAN
+}
+".MainWindow": {
+  backgroundColor: "#EEE",
+}
+".MainWindow[platform=android]": {
+  navBarHidden: true,
+  exitOnClose: true
+}
+".MainWindow[platform=android formFactor=tablet]": {
+  orientationModes: [
+    Ti.UI.LANDSCAPE_LEFT
+  ]
+}
+".MainWindow[formFactor=handheld]": {
+  orientationModes: [
+    Ti.UI.PORTRAIT
+  ]
 }
