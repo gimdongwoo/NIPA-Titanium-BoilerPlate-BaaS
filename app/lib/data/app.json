@@ -1,5 +1,5 @@
 {
-	"configurationUrl": "http://parseserver-bsmcf-env.us-east-1.elasticbeanstalk.com/public/app.json",
+	"configurationUrl": "http://199.223.234.216/public/app.json",
 	"cVersion": "1.0.0",
 	"cMinimumVersion": "1.0.0",
 	"dbVersion": "1.0.0",
