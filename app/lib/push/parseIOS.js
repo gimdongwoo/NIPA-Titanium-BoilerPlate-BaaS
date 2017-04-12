@@ -15,20 +15,20 @@ var iosPushService = module.exports = {};
  * @param {Object} option model option parmeter
  */
 iosPushService.start = function(param, option){
-	// installation model을 저장하기
-	// 필수 타입[ios] : deviceType, 	deviceToken
-	// 필수 타입[android] : deviceType, deviceToken, // gcm시 pushType과 gcmsenderid도.
-	var args = {
-		deviceType : "ios",
-		appName: Ti.App.name,
-		appVersion: Ti.App.version,
-		appIdentifier : Ti.App.id,
-		deviceToken: param.deviceToken,
+  // installation model을 저장하기
+  // 필수 타입[ios] : deviceType,   deviceToken
+  // 필수 타입[android] : deviceType, deviceToken, // gcm시 pushType과 gcmsenderid도.
+  var args = {
+    deviceType : "ios",
+    appName: Ti.App.name,
+    appVersion: Ti.App.version,
+    appIdentifier : Ti.App.id,
+    deviceToken: param.deviceToken,
     parseVersion : "rest",
     installationId: param.installationId
-	};
+  };
 
-	return installation.save(args, option);
+  return installation.save(args, option);
 };
 
 /**
@@ -37,8 +37,11 @@ iosPushService.start = function(param, option){
  * @param {String} value Value
  */
 iosPushService.putValue = function (key, value) {
-	// installation model에 값 지정해서 저장하기
-	return installation.set(key, value).save();
+  // installation model에 값 지정해서 저장하기
+  // return installation.set(key, value).save();
+  var _attributes = {};
+  _attributes[key] = value;
+  return installation._save(_attributes);
 };
 
 /**
@@ -46,7 +49,7 @@ iosPushService.putValue = function (key, value) {
  * @param {String} argument
  */
 iosPushService.authenticate = function (argument) {
-	// void
+  // void
 };
 
 /**
@@ -54,7 +57,7 @@ iosPushService.authenticate = function (argument) {
  * @param {String} argument
  */
 iosPushService.subscribeChannel = function (channel) {
-	// void
+  // void
 };
 
 /**
@@ -62,5 +65,5 @@ iosPushService.subscribeChannel = function (channel) {
  * @param {String} argument
  */
 iosPushService.unsubscribeChannel = function (channel) {
-	// void
+  // void
 };

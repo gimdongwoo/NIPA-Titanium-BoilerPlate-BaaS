@@ -1,8 +1,8 @@
 // vim:ts=4:sts=4:sw=4:
 /*!
  *
- * Copyright 2009-2012 Kris Kowal under the terms of the MIT
- * license found at http://github.com/kriskowal/q/raw/master/LICENSE
+ * Copyright 2009-2016 Kris Kowal under the terms of the MIT
+ * license found at https://github.com/kriskowal/q/blob/v1/LICENSE
  *
  * With parts by Tyler Close
  * Copyright 2007-2009 Tyler Close under the terms of the MIT X license found
@@ -327,6 +327,11 @@ var object_create = Object.create || function (prototype) {
     return new Type();
 };
 
+var object_defineProperty = Object.defineProperty || function (obj, prop, descriptor) {
+    obj[prop] = descriptor.value;
+    return obj;
+};
+
 var object_hasOwnProperty = uncurryThis(Object.prototype.hasOwnProperty);
 
 var object_keys = Object.keys || function (object) {
@@ -377,19 +382,20 @@ function makeStackTraceLong(error, promise) {
         promise.stack &&
         typeof error === "object" &&
         error !== null &&
-        error.stack &&
-        error.stack.indexOf(STACK_JUMP_SEPARATOR) === -1
+        error.stack
     ) {
         var stacks = [];
         for (var p = promise; !!p; p = p.source) {
-            if (p.stack) {
+            if (p.stack && (!error.__minimumStackCounter__ || error.__minimumStackCounter__ > p.stackCounter)) {
+                object_defineProperty(error, "__minimumStackCounter__", {value: p.stackCounter, configurable: true});
                 stacks.unshift(p.stack);
             }
         }
         stacks.unshift(error.stack);
 
         var concatedStacks = stacks.join("\n" + STACK_JUMP_SEPARATOR + "\n");
-        error.stack = filterStackString(concatedStacks);
+        var stack = filterStackString(concatedStacks);
+        object_defineProperty(error, "stack", {value: stack, configurable: true});
     }
 }
 
@@ -473,7 +479,7 @@ function deprecate(callback, name, alternative) {
     return function () {
         if (typeof console !== "undefined" &&
             typeof console.warn === "function") {
-            Ti.API.warn(name + " is deprecated, use " + alternative +
+            console.warn(name + " is deprecated, use " + alternative +
                          " instead.", new Error("").stack);
         }
         return callback.apply(callback, arguments);
@@ -515,6 +521,14 @@ Q.nextTick = nextTick;
  * Controls whether or not long stack traces will be on
  */
 Q.longStackSupport = false;
+
+/**
+ * The counter is used to determine the stopping point for building
+ * long stack traces. In makeStackTraceLong we walk backwards through
+ * the linked list of promises, only stacks which were created before
+ * the rejection are concatenated.
+ */
+var longStackCounter = 1;
 
 // enable long stacks if Q_DEBUG is set
 if (typeof process === "object" && process && process.env && process.env.Q_DEBUG) {
@@ -588,6 +602,7 @@ function defer() {
             // At the same time, cut off the first line; it's always just
             // "[object Promise]\n", as per the `toString`.
             promise.stack = e.stack.substring(e.stack.indexOf("\n") + 1);
+            promise.stackCounter = longStackCounter++;
         }
     }
 
@@ -597,7 +612,12 @@ function defer() {
 
     function become(newPromise) {
         resolvedPromise = newPromise;
-        promise.source = newPromise;
+
+        if (Q.longStackSupport && hasStacks) {
+            // Only hold a reference to the new promise if long stacks
+            // are enabled to reduce memory usage
+            promise.source = newPromise;
+        }
 
         array_reduce(messages, function (undefined, message) {
             Q.nextTick(function () {
@@ -725,7 +745,7 @@ Promise.prototype.join = function (that) {
             // TODO: "===" should be Object.is or equiv
             return x;
         } else {
-            throw new Error("Can't join: not the same: " + x + " " + y);
+            throw new Error("Q can't join: not the same: " + x + " " + y);
         }
     });
 };
@@ -1622,13 +1642,12 @@ function any(promises) {
         function onFulfilled(result) {
             deferred.resolve(result);
         }
-        function onRejected() {
+        function onRejected(err) {
             pendingCount--;
             if (pendingCount === 0) {
-                deferred.reject(new Error(
-                    "Can't get fulfillment value from any promise, all " +
-                    "promises were rejected."
-                ));
+                err.message = ("Q can't get fulfillment value from any promise, all " +
+                    "promises were rejected. Last error message: " + err.message);
+                deferred.reject(err);
             }
         }
         function onProgress(progress) {
@@ -1753,7 +1772,7 @@ Q["finally"] = function (object, callback) {
 Promise.prototype.fin = // XXX legacy
 Promise.prototype["finally"] = function (callback) {
     if (!callback || typeof callback.apply !== "function") {
-        throw new Error("Can't apply finally callback");
+        throw new Error("Q can't apply finally callback");
     }
     callback = Q(callback);
     return this.then(function (value) {
@@ -1918,6 +1937,9 @@ Promise.prototype.nfcall = function (/*...args*/) {
  */
 Q.nfbind =
 Q.denodeify = function (callback /*...args*/) {
+    if (callback === undefined) {
+        throw new Error("Q can't wrap an undefined function");
+    }
     var baseArgs = array_slice(arguments, 1);
     return function () {
         var nodeArgs = baseArgs.concat(array_slice(arguments));

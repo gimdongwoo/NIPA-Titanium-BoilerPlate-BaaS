@@ -3,74 +3,43 @@
 *
 * @class utilities
 */
-//check. object의 값이 모두있어야함.
-exports.checkRequired = function ( object ) {
-  var keys = Object.keys(object);
-  for ( var i = 0, iMax = keys.length; i < iMax; ++i ) {
-    var key = keys[i];
-    if( object.hasOwnProperty(key) ) {
-      if ( !object[key] ) {
-        throw 'checkRequired() fail: required value of key['+key+']';
-      }
+
+// first char change to uppercase
+exports.ucfirst = function (text) {
+    if (!text) return text;
+    return text[0].toUpperCase() + text.substr(1);
+}
+
+// Adds thousands separators to a number
+exports.numberWithCommas = function (value) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// url open
+exports.openUrl = function (url) {
+  Ti.API.debug("openUrl", url);
+  if (OS_IOS && isAllowdUrl(url)) {
+    var dialog = require("ti.safaridialog");
+    if(dialog.isSupported()){
+      return dialog.open({
+        url: url,
+        title: "",
+        tintColor: "#ff5757"
+      });
     }
   }
 
-  return object;
-}
+  return Titanium.Platform.openURL(url);
 
-/*
-* label의 최대 줄을 제한하하는 용도(newfeedList의 W_F13등의 값할당에 의존.
-*
-* calculateHeightOfLimitLine({
-*   startWidth: startWidth, //option
-*   lineWidth: (CTX.width() - (26*2)),
-*   maxLine: 4, //TODO 짧게하면 제대로 안나옴. 길어도 현재는 그냥 세줄로 제약두니괜찮음.
-*   fontSize: 13
-*   text: text,
-* })
-*
-* return {   maxHeight: maxHeight, lastCharIdx: lastCharIdx  }
-**/
-exports.calculateHeightOfLimitLine = function (params) {
-  var APP = require("core");
-  // APP.log("debug", "calculateHeightOfLimitLine", params);
-
-  //required
-  var text = params['text'] || ''
-  , LINE1_WIDTH = params['lineWidth']
-  , LINE2_WIDTH = params['lineWidth'] * 2
-  , LIMIT_LINE_WIDTH = LINE1_WIDTH * params['maxLine']
-  , W_FONT = 'W_F' + (params['fontSize'] || 13)
-  , H_FONT = 'H_F' + (params['fontSize'] || 13);
-
-  //option
-  var curWidth = params['startWidth'] || 0;
-  //한 글자식 확인.
-  var lastCharIdx = 0;
-  for(var max=text.length; lastCharIdx<max; ++lastCharIdx){
-    if( curWidth >= LIMIT_LINE_WIDTH ) break;
-
-    curWidth += APP[W_FONT][exports.getCharType(text.charCodeAt(lastCharIdx))];
-
+  function isAllowdUrl(url) {
+    if (url.indexOf('facebook.com/sharer/sharer') > -1) return false;
+    else if (url.indexOf('facebook.com/dialog/feed') > -1) return false;
+    else if (url.indexOf('twitter.com/intent') > -1) return false;
+    else return true;
   }
+};
 
-  //curWidth에 맞는 높이는?
-  var maxHeight = 0;
-  if ( curWidth < LINE1_WIDTH ){
-    maxHeight = APP[H_FONT]['1'];
-  } else if( curWidth > LINE2_WIDTH ) {
-    maxHeight = APP[H_FONT]['3'];
-  } else {
-    maxHeight = APP[H_FONT]['2'];
-  }
-
-  return {
-    maxHeight: maxHeight,
-    lastCharIdx: lastCharIdx
-  }
-}
-
-//제한된 글자로 자르고, ...을붙여줌.
+// cut text length add decoration
 exports.limitText = function (text, limitCount) {
   text = text || '';
 
@@ -79,74 +48,6 @@ exports.limitText = function (text, limitCount) {
   } else {
     return text.slice(0, limitCount) + '...';
   }
-}
-
-//char_ASCII: text.charCodeAt(i)
-exports.getCharType = function (char_ASCII){
-  // APP.log("error", "char_ASCII",char_ASCII)
-  // APP.W_F13['k'] = $.char_13_k.size.width;
-  // APP.W_F13['n'] = $.char_13_n.size.width;
-  // APP.W_F13['e1'] = $.char_13_e1.size.width;
-  // APP.W_F13['s0'] = $.char_13_s0.size.width;
-  // APP.W_F13['s1'] = $.char_13_s1.size.width;
-  if((char_ASCII >= 12592) || (char_ASCII <= 12687)){
-     //한글
-     return 'k';
-  }else if (char_ASCII == 32){
-    //공백
-    return 's0'
-  }else if(char_ASCII >= 48 && char_ASCII <= 57 ){
-    //숫자
-    return 'n';
-  }else if(char_ASCII>=65 && char_ASCII<=90){
-    //영어(대문자)
-    return 'e0';
-  }else if(char_ASCII>=97 && char_ASCII<=122){
-    //영어(소문자)
-    return 'e1';
-  }else if ((char_ASCII>=33 && char_ASCII<=47)
-  || (char_ASCII>=58 && char_ASCII<=64)
-  || (char_ASCII>=91 && char_ASCII<=96)
-  || (char_ASCII>=123 && char_ASCII<=126)){
-    //특수기호
-    return 's1';
-  }else{
-    //기타는 그냥 한글과 같이.
-    return 'k';
-  }
-}
-
-// 문장, 시간에 효과주기.
-exports.attributedStringForTitleAndTime = function (titleText, timeText) {
-  var fullText = titleText + " " + timeText;
-
-  var attributes = [];
-  if(titleText && timeText){
-    //title
-    attributes.push( {
-      type: Titanium.UI.ATTRIBUTE_FONT,
-      value: {fontSize:16, fontWeight:'bold'},
-      range: [0, titleText.length]
-    });
-    attributes.push( {
-      type: Ti.UI.ATTRIBUTE_FOREGROUND_COLOR,
-      value: '#655252',
-      range: [0, titleText.length]
-    });
-    //timeText
-    attributes.push( {
-      type: Titanium.UI.ATTRIBUTE_FONT,
-      value: {fontSize:12, fontWeight:'Regular'},
-      range: [titleText.length+1, timeText.length]
-    });
-    attributes.push( {
-      type: Ti.UI.ATTRIBUTE_FOREGROUND_COLOR,
-      value: '#ac9090',
-      range: [titleText.length+1, timeText.length]
-    });
-
-  }
-  return Titanium.UI.createAttributedString({text:fullText, attributes:attributes});
 }
 
 // underline style
@@ -168,7 +69,8 @@ exports.underlineToLabel = function ($label) {
     $label.setAttributedString(attr);
   }
 }
-//라벨에 특정텍스트 bold효과주기.
+
+// bold style
 exports.effectLabelToBold = function (label, originText, boldTexts, options) {
   options || (options = { fontSize: 14, isBackSearch : false });
   var attributes = [];
@@ -176,7 +78,6 @@ exports.effectLabelToBold = function (label, originText, boldTexts, options) {
   for(var i=0,max=boldTexts.length; i<max; ++i){
     var boldText = boldTexts[i];
 
-    //TODO 필요하다면 여럿찾아서 효과줄수있겠지. 지금은 하나만.
     var firstIdx = options.isBackSearch ? originText.lastIndexOf(boldText) : originText.indexOf(boldText);
     if(firstIdx != -1){
       attributes.push( {
@@ -190,13 +91,13 @@ exports.effectLabelToBold = function (label, originText, boldTexts, options) {
   var attr = Titanium.UI.createAttributedString({text:originText, attributes:attributes});
 
   if(OS_IOS){
-    label.setAttributedString(attr); //ios에서 아래값안ㅁ먹어..
+    label.setAttributedString(attr);
   }else{
     label.applyProperties({ text: originText, attributedString: attr});
   }
 }
 
-//라벨에 특정텍스트 color효과주기.
+// color style
 exports.effectLabelToColor = function (label, originText, colorTexts, options) {
   options || (options = { fontSize: 14, isBackSearch : false, color: "#655252" });
   var attributes = [];
@@ -221,192 +122,6 @@ exports.effectLabelToColor = function (label, originText, colorTexts, options) {
   }else{
     label.applyProperties({ text: originText, attributedString: attr});
   }
-}
-
-// TODO attribut가 없을때 attr만 넣으면 값이 사라지는 현상이일어난다.
-exports.createLabelPropertiesForMention = function (text, tagBackground, fontColor, options) {
-  var attributeList = this._createAttributeList(text, tagBackground, fontColor, options) || [];
-
-  //TODO 안드로이드. 리스트뷰에서. 라벨에 attr적용된 텍스트가  사라지는문제.
-  // - 스크롤이 엄청길어지면 사라지나요?  // - section이 여러개이고. 하위섹션그릴때 사라지나?
-  // - {text : ..} {attri..} 두가지를 섞어서 사용할때 사라진다.
-    // 같은 row의 템플릿..에 대해서. 내부요소의 라벨에 attr만 사용해야된다.
-    // 다시그릴때 text효과만 계산해서 attr적용된얘는 사라지는것같음.
-
-  //  리스트뷰에서 scroll등의 섹션의 글자를 다시그리기 작업시에. 각row의 bind된 라벨에 대해서 섞어쓴것이있으면......사라지는현상발생.
-
-  var attr = Titanium.UI.createAttributedString({text:text, attributes:attributeList});
-  return { attributedString : attr };
-}
-
-//@포함한 것의 스타일 변경해주기.
-exports.createAttributedStringForMention = function (text, tagBackground, fontColor, options) {
-  var attributeList = this._createAttributeList(text, tagBackground, fontColor, options);
-  var properties = attributeList.length ? {text:text, attributes:attributeList} : {text:text}
-  return Titanium.UI.createAttributedString(properties);
-}
-
-exports._createAttributeList = function (text, tagBackground, fontColor, options) {
-  var APP = require("core");
-
-  options || (options = {});
-  //background color
-  // ios에서는 attributedString을 사용하면 content의 폰트등이 무시되기에 전체지정 다시하고, 부분을 오버라이딩.
-
-  // if(OS_IOS){
-  // attributes.push( {
-  //   type: Titanium.UI.ATTRIBUTE_FONT,
-  //   //뭐여....순서를 바꾸면 볼드가안먹네 Bold로해서그런가?
-  //   value: {fontWeight:'bold',fontSize:15},
-  //   range: [0, text.length]
-  // });
-
-  var attributes = [];
-
-  // attributes.push( {
-  //   type: Titanium.UI.ATTRIBUTE_FOREGROUND_COLOR,
-  //   value: "#655252",
-  //   range: [0, text.length]
-  // });
-
-  // normal tag based search
-  if (!options.mentionList || !_.isArray(options.mentionList)) {
-    var tag = "@";
-    // var re = new RegExp("\\s"+tag+"\\S+\\s", 'g');
-    var re = new RegExp(tag+"\\S+\\s", 'g');
-    var match;
-    while ((match = re.exec(text)) !== null) {
-      // mentionWords.push({start:match.index, length:match[0].length});
-      // match.index; // Match index.    match[0]; // Matching string.
-      // Ti.API.debug("createFormaterForMention", match.index,match[0]);
-
-      var tagStart = match.index || 0;
-      var mentionStart = tagStart + tag.length;
-      var mentionLength = match[0].length - tag.length || 0;
-      /** styling
-      * @param tag, tagStart, mentionStart, mentionLength
-      */
-      stylingSentence(tag, tagStart, mentionStart, mentionLength, { useLink: options.useLink });
-    }
-  } else {
-    // mention list based search
-    // {
-    //   tag : this.tag,
-    //   text : args.text + ' ',
-    //   type : args.type,
-    //   value : args.id
-    // }
-    _.each(options.mentionList, function (mention) {
-      // APP.log("debug", "mention styling :", mention);
-      if (mention.tag && mention.text) {
-        var tag = mention.tag;
-        var mtext = mention.text.trimRight();
-        var idx = text.indexOf(tag + mtext);
-        while (idx != -1) {
-          var tagStart = idx;
-          var mentionStart = tagStart + tag.length;
-          var mentionLength = mtext.length;
-          /** styling
-          * @param tag, tagStart, mentionStart, mentionLength
-          */
-          stylingSentence(tag, tagStart, mentionStart, mentionLength, { useLink: options.useLink, mention: mention });
-          // next
-          idx = text.indexOf(tag + mtext, idx + 1);
-        }
-      }
-    });
-  }
-  return attributes;
-
-  /** common styling helper
-  * @param tag, tagStart, mentionStart, mentionLength
-  */
-  function stylingSentence(tag, tagStart, mentionStart, mentionLength, options) {
-    // @
-    attributes.push( {
-      type: Titanium.UI.ATTRIBUTE_FOREGROUND_COLOR,
-      value: tagBackground || 'white', //textarea backgroundColor
-      range: [tagStart, tag.length]
-    });
-    //안드로이드는 없어도 되고, 넣으면 죽음.
-    if(OS_IOS){
-      attributes.push( {
-        type: Ti.UI.ATTRIBUTE_SHADOW,
-        value: {color: tagBackground || 'white', offset: {width: 0, height: 0}},
-        // value: {color: 'green', offset: {width: 10, height: 5}},
-        range: [tagStart, tag.length]
-      });
-    }
-    attributes.push( {
-      type: Titanium.UI.ATTRIBUTE_FONT,
-      value: {fontSize:7},
-      range: [tagStart, tag.length]
-    });
-
-    //link
-    //DONE : iOS는 color문제가 있음. https://jira.appcelerator.org/browse/TIMOB-19165
-    if(options.useLink){
-      var valueStr = "";
-      if (options.mention && options.mention.value) {
-        valueStr = JSON.stringify({
-          className : (options.mention.type || "Institute"),
-          instituteId : options.mention.value
-        });
-      } else {
-        var instituteString = text.substring(mentionStart, mentionStart+mentionLength);
-        //and에서 객체 전달시 문자열이 되네.
-        valueStr = JSON.stringify({
-          className : "Institute",
-          instituteName : instituteString
-        });
-      }
-      attributes.push({
-        type: Titanium.UI.ATTRIBUTE_LINK,
-        value: valueStr,
-        range: [mentionStart, mentionLength]
-      });
-      //ios는 undeline 별개로 바꿔줘야함.
-      if(OS_IOS){
-        attributes.push({
-          type: Ti.UI.ATTRIBUTE_UNDERLINE_COLOR,
-          value: fontColor || '#573b3b', //font color
-          range: [mentionStart, mentionLength]
-        });
-      }
-    }
-
-    //font
-    attributes.push( {
-      type: Titanium.UI.ATTRIBUTE_BACKGROUND_COLOR,
-      value: 'transparent',
-      range: [mentionStart, mentionLength]
-    });
-    attributes.push( {
-      type: Titanium.UI.ATTRIBUTE_FONT,
-      value: {fontWeight:'bold'},
-      range: [mentionStart, mentionLength]
-    });
-    attributes.push( {
-      type: Titanium.UI.ATTRIBUTE_FOREGROUND_COLOR,
-      value: fontColor || '#573b3b', //font color
-      range: [mentionStart, mentionLength]
-    });
-  }
-}
-
- /**
-  * filling z front of n fit to width
-  * @param {String/Number} n Target number
-  * @param {String} width Fit to width
-  * @param {String} z filled text
-  */
-exports.zeroPad = function (n, width, z) {
-  if ( typeof n == 'string') {
-    n = parseInt(n);
-  }
-  z = z || '0';
-  n = n + '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
 /**
@@ -441,64 +156,6 @@ exports.getNumberOnly = function (val)  {
 };
 
 /**
- * Checks to see if an item in the cache is stale or fresh
- * @param {String} _url The URL of the file we're checking
- * @param {Number} _time The time, in minutes, to consider 'warm' in the cache
- */
-exports.isStale = function (_url, _time) {
-  var db = Ti.Database.open(Titanium.App.id);
-  var time = new Date().getTime();
-  var cacheTime = typeof _time !== "undefined" ? _time : 5;
-  var freshTime = time - (cacheTime * 60 * 1000);
-  var lastUpdate = 0;
-
-  var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-
-  while(data.isValidRow()) {
-    lastUpdate = data.fieldByName("time");
-
-    data.next();
-  }
-
-  data.close();
-  db.close();
-
-  if(lastUpdate === 0) {
-    return "new";
-  } else if(lastUpdate > freshTime) {
-    return false;
-  } else {
-    return true;
-  }
-};
-
-/**
- * Returns last updated time for an item in the cache
- * @param {String} _url The URL of the file we're checking
- */
-exports.lastUpdate = function (_url) {
-  var db = Ti.Database.open(Titanium.App.id);
-  var lastUpdate = 0;
-
-  var data = db.execute("SELECT time FROM updates WHERE url = " + exports.escapeString(_url) + " ORDER BY time DESC LIMIT 1;");
-
-  while(data.isValidRow()) {
-    lastUpdate = data.fieldByName("time");
-
-    data.next();
-  }
-
-  data.close();
-  db.close();
-
-  if(lastUpdate === 0) {
-    return new Date().getTime();
-  } else {
-    return lastUpdate;
-  }
-};
-
-/**
  * Checks to see if a file exists
  * @param {String} _path The path of the file to check
  */
@@ -510,26 +167,6 @@ exports.fileExists = function (_path) {
   } else {
     return false;
   }
-};
-
-/**
- * Adds thousands separators to a number
- * @param {Number} _number The number to perform the action on
- */
-exports.formatNumber = function (_number) {
-  _number = _number + "";
-
-  x = _number.split(".");
-  x1 = x[0];
-  x2 = x.length > 1 ? "." + x[1] : "";
-
-  var expression = /(\d+)(\d{3})/;
-
-  while(expression.test(x1)) {
-    x1 = x1.replace(expression, "$1" + "," + "$2");
-  }
-
-  return x1 + x2;
 };
 
 /**
@@ -704,8 +341,6 @@ exports.toggleArray = function (idList, id) {
 exports.toObject = function (pointerData) {
   if(pointerData){
     var info = _.clone(pointerData.attributes || pointerData || {});
-    // pointer를 위한 id
-    // cloudCode로 오는 것을 위한 className.
     info["objectId"] = info["id"] = pointerData.id || pointerData.objectId;
     info["className"] = info["className"] || pointerData.className;
     return info;
@@ -727,8 +362,6 @@ exports.listViewFindItem = function (e, doAction) {
     var item = e.section.getItemAt(e.itemIndex);
     if(item){
       _.isFunction(doAction) && doAction(item);
-      // item = _.extend(item, { backgroundColor:"blue"});
-      // e.section.updateItemAt(e.itemIndex, item, {animated:false});
 
       return item; //되나?
     }
@@ -748,28 +381,9 @@ exports.listViewDeselect = function (_listview, _sectionIndex, _itemIndex) {
   }
 };
 
-// imageInfo에 맞춰서. width조정된 것 반환.
-exports.imagePropByWidth = function(imageInfo, staticWidth) {
-  if (!imageInfo) return {}; //check
-
-  // 1개 자리 이미지는 큰거로 씀
-  var imageUrl = imageInfo.thumbnailLargeUrl || imageInfo.url || imageInfo.thumbnailUrl;
-
-  //!!중요: 넘치는 이미지를 적절하게 주려면, imageWrap은 자르고싶은고정크기.
-  //내부 이미지뷰는 width와 hegiht를, 실제 이미지 비율에 맞춰서 줘야한다. 안그러면 ㅡㅡ 이상하게나옴.
-  staticWidth = staticWidth || imageInfo['width'];
-  var relativeHeight = imageInfo['height'] / imageInfo['width'] * staticWidth;
-
-  return {
-    image: imageUrl,
-    width: staticWidth,
-    height: relativeHeight
-  }
-}
-
 /**
  * tryCatch wrapper
- * 비동기 콜백의 런타임에러 처리용.
+ * asynchronous callback runtime error handler
  */
 exports.tryCatcher = function(func, context) {
   return function( /*arguments*/ ) {
@@ -785,44 +399,6 @@ exports.tryCatcher = function(func, context) {
       APP.alert('tryAgainAlert');
       APP.log("error", error['message'], error['stack']);
     }
-  }
-}
-
-/**
- * newsfeed collection include string
- * @param charCode
- */
-exports.getCharType = function (char_ASCII){
-  // APP.log("error", "char_ASCII",char_ASCII)
-  // APP.W_F13['k'] = $.char_13_k.size.width;
-  // APP.W_F13['n'] = $.char_13_n.size.width;
-  // APP.W_F13['e1'] = $.char_13_e1.size.width;
-  // APP.W_F13['s0'] = $.char_13_s0.size.width;
-  // APP.W_F13['s1'] = $.char_13_s1.size.width;
-  if((char_ASCII >= 12592) || (char_ASCII <= 12687)){
-     //한글
-     return 'k';
-  }else if (char_ASCII == 32){
-    //공백
-    return 's0'
-  }else if(char_ASCII >= 48 && char_ASCII <= 57 ){
-    //숫자
-    return 'n';
-  }else if(char_ASCII>=65 && char_ASCII<=90){
-    //영어(대문자)
-    return 'e0';
-  }else if(char_ASCII>=97 && char_ASCII<=122){
-    //영어(소문자)
-    return 'e1';
-  }else if ((char_ASCII>=33 && char_ASCII<=47)
-  || (char_ASCII>=58 && char_ASCII<=64)
-  || (char_ASCII>=91 && char_ASCII<=96)
-  || (char_ASCII>=123 && char_ASCII<=126)){
-    //특수기호
-    return 's1';
-  }else{
-    //기타는 그냥 한글과 같이.
-    return 'k';
   }
 }
 

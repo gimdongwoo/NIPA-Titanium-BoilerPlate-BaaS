@@ -1,7 +1,7 @@
-// 앱의 상태를 처리함
+// global app status
 Alloy.Globals.appOnline = true;
 
-// Parse 초기화
+// Parse Initializes
 require("tiparsejs_wrapper")({
   applicationId: Ti.App.Properties.getString('Parse_AppId'),
   javascriptkey: Ti.App.Properties.getString('Parse_JsKey')
@@ -9,7 +9,7 @@ require("tiparsejs_wrapper")({
 // use RevocableSession
 Parse.User.enableRevocableSession();
 
-// 기초 설정
+// default settings
 Ti.UI.backgroundColor = '#ffffff';
 
 // // Monitor silent push notifications

@@ -6,7 +6,6 @@ exports.definition = {
 	config : {
 		adapter: {
 			type: "parse",
-			// parseSync 에서 이걸로 만드니 주의. objectId로 값을 전달해야 model.id에 접근할 수 있다.
 			idAttribute: "objectId"
 		}
 		// table schema and adapter information
